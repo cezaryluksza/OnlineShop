@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "OnlineShop: Twój koszyk";
+}
+
+<h2>Twój koszyk</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ilość</th>
+            <th>Product</th>
+            <th class="text-right">Cena</th>
+            <th class="text-right">Wartość</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+        <tr>
+            <td class="text-center">@line.Quantity</td>
+            <td class="text-center">@line.Product.Name</td>
+            <td class="text-center">@line.Product.Price.ToString("c")</td>
+            <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Razem:</td>
+            <td class="text-right">
+                @Model.Cart.ComputeTotalValue().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Kontynuuj zakupy</a>
+</div>
+
