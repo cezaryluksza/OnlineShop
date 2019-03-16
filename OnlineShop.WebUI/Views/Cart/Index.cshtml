@@ -1,10 +1,16 @@
-﻿
+﻿@model OnlineShop.WebUI.Models.CartIndexViewModel
+
+
 @{
     ViewBag.Title = "OnlineShop: Twój koszyk";
 }
 
+<style>
+    #cartTable td { vertical-align: middle; }
+</style>
+
 <h2>Twój koszyk</h2>
-<table class="table">
+<table id="cartTable" class="table">
     <thead>
         <tr>
             <th>Ilość</th>
@@ -21,6 +27,14 @@
             <td class="text-center">@line.Product.Name</td>
             <td class="text-center">@line.Product.Price.ToString("c")</td>
             <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+            <td>
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("ProductId", line.Product.ProductId)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Usuń"/>
+                    }
+            </td>
         </tr>
         }
     </tbody>
