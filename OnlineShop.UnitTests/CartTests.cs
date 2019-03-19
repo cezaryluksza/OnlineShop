@@ -130,7 +130,7 @@ namespace OnlineShop.UnitTests
 
             Cart cart = new Cart();
 
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object, null);
 
             //Act
             target.AddToCart(cart, 1, null);
@@ -153,7 +153,7 @@ namespace OnlineShop.UnitTests
 
             Cart cart = new Cart();
 
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object, null);
 
             //Act
             CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
@@ -169,7 +169,7 @@ namespace OnlineShop.UnitTests
             //Arrange
             Cart cart = new Cart();
 
-            CartController target = new CartController(null);
+            CartController target = new CartController(null, null);
 
             //Act
             CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
