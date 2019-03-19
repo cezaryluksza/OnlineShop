@@ -1,4 +1,4 @@
-﻿@model SportsStore.Domain.Entities.Product
+﻿@model OnlineShop.Domain.Entities.Product
 <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
     <h2>
         @Model.Name
@@ -13,7 +13,7 @@
         <div class="ui-block-c">
             @using (Html.BeginForm("AddToCart", "Cart"))
             {
-                @Html.HiddenFor(x => x.ProductID)
+                @Html.HiddenFor(x => x.ProductId)
                 @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
                 <input type="submit" data-inline="true"
                        data-mini="true" value="Dodaj do koszyka" />
