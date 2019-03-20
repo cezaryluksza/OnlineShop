@@ -17,7 +17,7 @@ namespace OnlineShop.UnitTests
     public class CartTests
     {
         [TestMethod]
-        public void Can_Add_New_Lines()
+        public void CanAddNewLines()
         {
             //Arrange
             Product p1 = new Product { ProductId = 1, Name = "P1" };
@@ -36,7 +36,7 @@ namespace OnlineShop.UnitTests
             Assert.AreEqual(results[1].Product, p2);
         }
         [TestMethod]
-        public void Can_Add_Quantity_For_Existing_Lines()
+        public void CanAddQuantityForExistingLines()
         {
             //Arrange
             Product p1 = new Product { ProductId = 1, Name = "P1" };
@@ -57,7 +57,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Remove_Line()
+        public void CanRemoveLine()
         {
             //Arrange
             Product p1 = new Product { ProductId = 1, Name = "P1" };
@@ -80,7 +80,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Calculate_Cart_Total()
+        public void CalculateCartTotal()
         {
             //Arrange
             Product p1 = new Product { ProductId = 1, Name = "P1", Price = 100M };
@@ -99,7 +99,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Clear_Contents()
+        public void CanClearContents()
         {
             //Arrange
             Product p1 = new Product { ProductId = 1, Name = "P1", Price = 100M };
@@ -118,7 +118,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Add_To_Cart()
+        public void CanAddToCart()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -141,7 +141,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Adding_Product_To_Cart_Goes_To_Cart_Screen()
+        public void AddingProductToCartGoesToCartScreen()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -164,7 +164,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_View_Cart_Contests()
+        public void CanViewCartContests()
         {
             //Arrange
             Cart cart = new Cart();
@@ -180,9 +180,9 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Cannot_Checkout_Empty_Cart()
+        public void CannotCheckoutEmptyCart()
         {
-            // Arrange
+            //Arrange
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
 
             Cart cart = new Cart();
@@ -191,10 +191,10 @@ namespace OnlineShop.UnitTests
 
             CartController target = new CartController(null, mock.Object);
 
-            // Act
+            //Act
             ViewResult result = target.Checkout(cart, shippingDetails);
 
-            // Assert
+            //Assert
             mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
             Times.Never());
 
@@ -204,46 +204,48 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Cannot_Checkout_Invalid_ShippingDetails()
+        public void CannotCheckoutInvalidShippingDetails()
         {
-            // Arrange - create a mock order processor
+            //Arrange
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
-            // Arrange - create a cart with an item
+
             Cart cart = new Cart();
             cart.AddItem(new Product(), 1);
-            // Arrange - create an instance of the controller
+
             CartController target = new CartController(null, mock.Object);
-            // Arrange - add an error to the model
             target.ModelState.AddModelError("error", "error");
-            // Act - try to checkout
+
+            //Act
             ViewResult result = target.Checkout(cart, new ShippingDetails());
-            // Assert - check that the order hasn't been passed on to the processor
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
-                Times.Never());
-            // Assert - check that the method is returning the default view
+
+            //Assert
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+
             Assert.AreEqual("", result.ViewName);
-            // Assert - check that I am passing an invalid model to the view
+
             Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
         }
 
         [TestMethod]
-        public void Can_Checkout_And_Submit_Order()
+        public void CanCheckoutAndSubmitOrder()
         {
-            // Arrange - create a mock order processor
+            //Arrange 
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
-            // Arrange - create a cart with an item
+
             Cart cart = new Cart();
             cart.AddItem(new Product(), 1);
-            // Arrange - create an instance of the controller
+
             CartController target = new CartController(null, mock.Object);
-            // Act - try to checkout
+
+            //Act 
             ViewResult result = target.Checkout(cart, new ShippingDetails());
-            // Assert - check that the order has been passed on to the processor
+
+            //Assert
             mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
             Times.Once());
-            // Assert - check that the method is returning the Completed view
+
             Assert.AreEqual("Completed", result.ViewName);
-            // Assert - check that I am passing a valid model to the view
+
             Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
         }
 

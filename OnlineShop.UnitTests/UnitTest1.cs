@@ -16,7 +16,7 @@ namespace OnlineShop.UnitTests
     public class UnitTest1
     {
         [TestMethod]
-        public void Can_Paginate()
+        public void CanPaginate()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -45,7 +45,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Generate_Page_Links()
+        public void CanGeneratePageLinks()
         {
             //Arrange - define an HTML gelper - we need to do this
             //in order to apply the extension method
@@ -70,7 +70,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Send_Pagination_View_Model()
+        public void CanSendPaginationViewModel()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -99,7 +99,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Filter_Products()
+        public void CanFilterProducts()
         {
             //Arrange
             //create the mock repository
@@ -128,7 +128,7 @@ namespace OnlineShop.UnitTests
 
 
         [TestMethod]
-        public void Can_Create_Categories()
+        public void CanCreateCategories()
         {
             //Arrange
             // - create te mock repository
@@ -155,7 +155,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Indicates_Selected_Category()
+        public void IndicatesSelectedCategory()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -177,7 +177,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Generate_Category_Specific_Product_Count()
+        public void GenerateCategorySpecificProductCount()
         {
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
