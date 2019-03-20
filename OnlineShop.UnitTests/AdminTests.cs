@@ -122,7 +122,7 @@ namespace OnlineShop.UnitTests
         }
 
         [TestMethod]
-        public void Can_Delete_Valid_Products()
+        public void CanDeleteValidProducts()
         {
             //Arrange
             Product prod = new Product { ProductId = 2, Name = "Test" };

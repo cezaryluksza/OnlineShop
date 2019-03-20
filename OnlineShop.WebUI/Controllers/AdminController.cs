@@ -34,13 +34,29 @@ namespace OnlineShop.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 repository.SaveProduct(product);
-                TempData["message"] = string.Format("Zapisano {0} ", product.Name);
+                TempData["message"] = string.Format($"Zapisano {product.Name} ");
                 return RedirectToAction("Index");
             }
             else
             {
                 return View(product);
             }
+        }
+
+        public ViewResult Create()
+        {
+            return View("Edit", new Product());
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int productId)
+        {
+            Product deletedProduct = repository.DeleteProduct(productId);
+            if (deletedProduct != null)
+            {
+                TempData["message"] = string.Format($"Usunięto {deletedProduct.Name}");
+            }
+            return RedirectToAction("Index");
         }
     }
 }

@@ -7,7 +7,7 @@
     <div class="panel-heading">
         <h3>Edycja @Model.Name</h3>
     </div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Admin"))
     {
         <div class="panel-body">
             @Html.HiddenFor(m => m.ProductId)
@@ -27,6 +27,7 @@
                             @Html.TextBox(property.PropertyName, null,
                             new { @class = "form-control" })
                         }
+                        @Html.ValidationMessage(property.PropertyName)
                     </div>
                 }
             }
