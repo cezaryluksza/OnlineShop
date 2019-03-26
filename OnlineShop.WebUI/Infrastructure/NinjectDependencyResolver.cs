@@ -8,6 +8,8 @@ using Ninject;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Concrete;
 using OnlineShop.Domain.Entities;
+using OnlineShop.WebUI.Infrastructure.Abstract;
+using OnlineShop.WebUI.Infrastructure.Concrete;
 
 namespace OnlineShop.WebUI.Infrastructure
 {
@@ -37,6 +39,8 @@ namespace OnlineShop.WebUI.Infrastructure
             };
 
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
+
+            kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
 
         }
     }
