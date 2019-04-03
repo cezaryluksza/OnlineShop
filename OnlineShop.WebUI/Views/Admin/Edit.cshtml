@@ -7,14 +7,22 @@
     <div class="panel-heading">
         <h3>Edycja @Model.Name</h3>
     </div>
-    @using (Html.BeginForm("Edit", "Admin"))
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="panel-body">
             @Html.HiddenFor(m => m.ProductId)
             @foreach (var property in ViewData.ModelMetadata.Properties)
             {
-                if (property.PropertyName != "ProductId")
+                switch (property.PropertyName)
                 {
+                    case "ProductId":
+                    case "ImageData":
+                    case "ImageMimeType":
+                        //brak operacji
+                        break;
+                    default:
+                        
+
                     <div class="form-group">
                         <label>@(property.DisplayName ?? property.PropertyName)</label>
                         @if (property.PropertyName == "Description")
@@ -29,9 +37,31 @@
                         }
                         @Html.ValidationMessage(property.PropertyName)
                     </div>
+                        break;
                 }
             }
+            <div class="form-group" style="">
+                <div style="position: relative;">
+                    <label>Zdjęcie</label>
+                    <a style="position: relative;" class='btn btn-default' href='javascript:;'>
+                        Wybierz plik...
+                        <input type="file" name="Image" style="position:absolute; width: 113px; height: 34px; top:0; left:0; filter: alpha(opacity=0);opacity:0;
+                                                                          background-color:transparent; color:transparent;" onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.ImageData == null)
+                {
+                    <div class="form-control-static">Brak zdjęcia</div>
+                }
+                else
+                {
+                    <img class="img-thumbnail" width="150" height="150" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+                }
+            </div>
         </div>
+
+
         <div class="panel-footer">
             <input type="submit" value="Zapisz" class="btn btn-primary" />
             @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new {
