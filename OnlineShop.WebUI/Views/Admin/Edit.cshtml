@@ -3,7 +3,7 @@
     ViewBag.Title = "Admin: Edycja " + @Model.Name;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="panel">
+<div class="container panel">
     <div class="panel-heading">
         <h3>Edycja @Model.Name</h3>
     </div>
@@ -52,11 +52,11 @@
                 </div>
                 @if (Model.ImageData == null)
                 {
-                    <div class="form-control-static">Brak zdjęcia</div>
+                    <div class="form-control-static" style="margin-top: 10px;">Brak zdjęcia</div>
                 }
                 else
                 {
-                    <img class="img-thumbnail" width="150" height="150" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+                    <img class="img-thumbnail" width="150" height="150" style="margin-top: 10px;" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
                 }
             </div>
         </div>
