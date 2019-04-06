@@ -5,11 +5,21 @@
     string wrapperClasses = horizontal ? "btn-group btn-group-sm btn-group-justified" : null;
 }
 
+@if (horizontal == false)
+{<div class="dropdown btn btn-block btn-default btn-lg" onclick="toggleMenu()">Kategorie</div>}
+
 <div class="@wrapperClasses">
-    @Html.ActionLink("Home", "List", "Product",
-    new { @class = horizontal ? "btn btn-default btn-sm" :
-    "btn btn-block btn-default btn-lg"
-    })
+
+    @*@Html.ActionLink("Home", "List", "Product", null, new { @class = horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg" })*@
+
+
+
+
+    @if (horizontal == false)
+    {
+        @:<div id="menu-box" style="display: block">
+        }
+
     @foreach (var link in Model)
     {
         @Html.RouteLink(link, new {
@@ -23,4 +33,13 @@
         + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
         })
     }
+
+
 </div>
+@if (horizontal == false)
+{
+@:</div>
+}
+
+@if (horizontal == false)
+{<div class="dropdown btn btn-block btn-default btn-lg" onclick="toggleMenu()">Sortowanie</div>}
