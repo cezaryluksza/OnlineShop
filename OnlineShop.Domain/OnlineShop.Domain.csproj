@@ -76,6 +76,15 @@
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
+    <Compile Include="Migrations\201904032018035_InitialCreate.cs" />
+    <Compile Include="Migrations\201904032018035_InitialCreate.Designer.cs">
+      <DependentUpon>201904032018035_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061731494_Product.cs" />
+    <Compile Include="Migrations\201904061731494_Product.Designer.cs">
+      <DependentUpon>201904061731494_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +92,14 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904032018035_InitialCreate.resx">
+      <DependentUpon>201904032018035_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061731494_Product.resx">
+      <DependentUpon>201904061731494_Product.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
