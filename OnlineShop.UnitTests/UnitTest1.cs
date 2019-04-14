@@ -205,5 +205,119 @@ namespace OnlineShop.UnitTests
             Assert.AreEqual(res3, 1);
             Assert.AreEqual(resAll, 5);
         }
+
+        #region Sorting
+        [TestMethod]
+        public void CanSortHighestPrice()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns(new Product[]
+                {
+                    new Product { ProductId = 1, Name = "Produkt1", Price = 100M },
+                    new Product { ProductId = 2, Name = "Produkt2", Price = 90M },
+                    new Product { ProductId = 3, Name = "Produkt3", Price = 130.50M },
+                    new Product { ProductId = 4, Name = "Produkt4", Price = 160.50M },
+                    new Product { ProductId = 5, Name = "Produkt5", Price = 1500M }
+                });
+
+            ProductController productController = new ProductController(mock.Object);
+
+            //Act
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.NajwyzszaCena).Model).Products.ToArray();
+
+            //Assert
+            Assert.AreEqual(1500M, result[0].Price);
+            Assert.AreEqual(160.50M, result[1].Price);
+            Assert.AreEqual(130.50M, result[2].Price);
+            Assert.AreEqual(100M, result[3].Price);
+            Assert.AreEqual(90M, result[4].Price);
+        }
+
+        [TestMethod]
+        public void CanSortLowestPrice()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns(new Product[]
+                {
+                    new Product { ProductId = 1, Name = "Produkt1", Price = 100M },
+                    new Product { ProductId = 2, Name = "Produkt2", Price = 90M },
+                    new Product { ProductId = 3, Name = "Produkt3", Price = 130.50M },
+                    new Product { ProductId = 4, Name = "Produkt4", Price = 160.50M },
+                    new Product { ProductId = 5, Name = "Produkt5", Price = 1500M }
+                });
+
+            ProductController productController = new ProductController(mock.Object);
+
+            //Act
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.NajnizszaCena).Model).Products.ToArray();
+
+            //Assert
+            Assert.AreEqual(90M, result[0].Price);
+            Assert.AreEqual(100M, result[1].Price);
+            Assert.AreEqual(130.50M, result[2].Price);
+            Assert.AreEqual(160.50M, result[3].Price);
+            Assert.AreEqual(1500M, result[4].Price);
+        }
+
+        [TestMethod]
+        public void CanSortMostPopular()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns(new Product[]
+                {
+                    new Product { ProductId = 1, Name = "Produkt1", Price = 100M, Visits = 1000, NumberOfBought = 700 },
+                    new Product { ProductId = 2, Name = "Produkt2", Price = 90M, Visits = 5000, NumberOfBought = 1700 },
+                    new Product { ProductId = 3, Name = "Produkt3", Price = 130.50M, Visits = 200, NumberOfBought = 100 },
+                    new Product { ProductId = 4, Name = "Produkt4", Price = 160.50M, Visits = 3000, NumberOfBought = 90 },
+                    new Product { ProductId = 5, Name = "Produkt5", Price = 1500M, Visits = 4000, NumberOfBought = 1700 },
+                    new Product { ProductId = 6, Name = "Produkt6", Price = 1500M, Visits = 4000, NumberOfBought = 3600 }
+                });
+
+            ProductController productController = new ProductController(mock.Object);
+
+            //Act
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.Popularnosc).Model).Products.ToArray();
+
+            //Assert
+            Assert.AreEqual("Produkt6", result[0].Name);
+            Assert.AreEqual("Produkt2", result[1].Name);
+            Assert.AreEqual("Produkt5", result[2].Name);
+            Assert.AreEqual("Produkt1", result[3].Name);
+            Assert.AreEqual("Produkt3", result[4].Name);
+            Assert.AreEqual("Produkt4", result[5].Name);
+        }
+
+        [TestMethod]
+        public void CanSortLargestNumberOfComments()
+        {
+            //Arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns(new Product[]
+                {
+                    new Product { ProductId = 1, Name = "Produkt1", NumberOfComments = 133 },
+                    new Product { ProductId = 2, Name = "Produkt2", NumberOfComments = 567 },
+                    new Product { ProductId = 3, Name = "Produkt3", NumberOfComments = 23 },
+                    new Product { ProductId = 4, Name = "Produkt4", NumberOfComments = 0 },
+                    new Product { ProductId = 5, Name = "Produkt5", NumberOfComments = 1 },
+                    new Product { ProductId = 6, Name = "Produkt6", NumberOfComments = 0 }
+                });
+
+            ProductController productController = new ProductController(mock.Object);
+
+            //Act
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.Komentarze).Model).Products.ToArray();
+
+            //Assert
+            Assert.AreEqual("Produkt2", result[0].Name);
+            Assert.AreEqual("Produkt1", result[1].Name);
+            Assert.AreEqual("Produkt3", result[2].Name);
+            Assert.AreEqual("Produkt5", result[3].Name);
+            Assert.AreEqual("Produkt4", result[4].Name);
+            Assert.AreEqual("Produkt6", result[5].Name);
+        }
+        #endregion
     }
 }
