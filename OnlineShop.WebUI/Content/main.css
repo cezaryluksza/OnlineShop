@@ -1,0 +1,51 @@
+﻿.left-menu {
+    margin-left: 10px;
+}
+
+/*Sortowanie*/
+.sorting {
+    position:relative;
+    display: block;
+    left: 0;
+    width: 100%;
+    top: 0;
+    transition: .5s  ease;
+}
+
+.off {
+    top: -1000px;
+}
+
+.sorting-button {
+    margin: 5px 0 5px 0;
+}
+
+.sorting-helper {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/*Kategorie*/
+.categories {
+    position: relative;
+    left: 0;
+    width: 100%;
+    top: 0;
+    transition: .5s ease;
+}
+
+.cat-off {
+    top: -1000px;
+}
+
+.categories-button {
+    margin: 5px 0 5px 0;
+}
+
+
+.categories-helper {
+    position: relative;
+    overflow: hidden;
+}
+
