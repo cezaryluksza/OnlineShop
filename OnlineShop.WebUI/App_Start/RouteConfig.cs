@@ -21,6 +21,8 @@ namespace OnlineShop.WebUI
 
             routes.MapRoute(null, "{category}/Strona{page}", new { controller = "Product", action = "List" }, new { page = @"\d+" });
 
+            routes.MapRoute(null, "Produkt/{productName}", new { controller = "Product", action = "Product" });
+
             routes.MapRoute(null, "{controller}/{action}");
 
             //routes.MapRoute(null, "Sortowanie{sorting}", new { controller = "Product", action = "List", sorting = UrlParameter.Optional });

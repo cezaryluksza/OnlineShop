@@ -1,19 +1,20 @@
 ﻿@model OnlineShop.Domain.Entities.Product
 
 <div class="well">
+    @*<a href="@Url.Action("Product", new { @Model.ProductId })">*@
+    @Html.RouteLink(Model.Name, new { controller = "Product", action="Product", productId = Model.ProductId, productName = Model.Name})
+        @if (Model.ImageData != null)
+        {
+            <div class="pull-left" style="margin-right: 10px">
+                <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+            </div>
+        }
 
-    @if (Model.ImageData != null)
-    {
-        <div class="pull-left" style="margin-right: 10px">
-            <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
-        </div>
-    }
-
-    <h3>
-        <strong>@Model.Name</strong>
-        <span class="pull-right label label-primary">@Model.Price.ToString("c")</span>
-    </h3>
-
+        <h3>
+            <strong>@Model.Name</strong>
+            <span class="pull-right label label-primary">@Model.Price.ToString("c")</span>
+        </h3>
+    @*</a>*@
     @using (Html.BeginForm("AddToCart", "Cart"))
     {
         <div class="pull-right">

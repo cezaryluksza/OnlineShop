@@ -74,5 +74,10 @@ namespace OnlineShop.WebUI.Controllers
             }
         }
 
+        public ActionResult Product(int productId)
+        {
+            Product product = repository.Products.FirstOrDefault(x => x.ProductId == productId);
+            return View(product);
+        }
     }
 }
