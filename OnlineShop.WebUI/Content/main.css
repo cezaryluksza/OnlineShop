@@ -1,4 +1,15 @@
-﻿.left-menu {
+﻿
+.navbar-custom {
+    background-color: #229922;
+    border-radius: 0;
+}
+.navbar-right {
+    float: right;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.left-menu {
     margin-left: 10px;
 }
 
@@ -9,11 +20,12 @@
     left: 0;
     width: 100%;
     top: 0;
-    transition: .5s  ease;
+    transition: .4s  ease;
 }
 
 .off {
     top: -1000px;
+    max-height: 0;
 }
 
 .sorting-button {
@@ -32,11 +44,12 @@
     left: 0;
     width: 100%;
     top: 0;
-    transition: .5s ease;
+    transition: .4s ease;
 }
 
 .cat-off {
     top: -1000px;
+    max-height: 0;
 }
 
 .categories-button {
@@ -47,5 +60,9 @@
 .categories-helper {
     position: relative;
     overflow: hidden;
+
 }
+
+
+
 

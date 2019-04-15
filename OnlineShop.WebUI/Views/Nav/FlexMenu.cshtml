@@ -1,7 +1,7 @@
 ﻿@model OnlineShop.WebUI.Models.MenuViewModel
 
 @{
-    bool horizontal = ((bool)(ViewContext.RouteData.Values["horizontalLayout"] ?? false));
+    bool horizontal = ((bool)(ViewContext.RouteData.Values["mobileNav"] ?? false));
     string wrapperClasses = horizontal ? "btn-group btn-group-sm btn-group-justified" : null;
 }
 

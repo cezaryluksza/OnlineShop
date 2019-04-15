@@ -8,34 +8,27 @@
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
     <link href="~/Content/main.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
-    <style>
-        .navbar-right {
-            float: right !important;
-            margin-right: 15px;
-            margin-left: 15px;
-        }
-    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">
-            <span class="hidden-xs">Sklep online</span>
-            <div class="visible-xs">Sklep</div>
-            <div class="visible-xs">online</div>
+    <div class="navbar navbar-custom" role="navigation">
+        <a class="navbar-brand" href="/">
+            <img class="visible-lg" src="~/Content/Images/Logo.png">
+            <img class="visible-md visible-sm" src="~/Content/Images/LogoMd.png">
+            <img class="visible-xs" src="~/Content/Images/LogoMobile.png">
         </a>
         @Html.Action("Summary", "Cart")
     </div>
-    <div class="visible-xs">
-        @Html.Action("Menu", "Nav", new { horizontalLayout = true })
+    <div class="hidden-lg">
+        @Html.Action("Menu", "Nav", new { mobileNav = true })
     </div>
     <div class="row panel">
-        <div class="col-sm-3 hidden-xs">
+        <div class="col-sm-3 visible-lg">
             @Html.Action("Menu", "Nav")
         </div>
+            <div class="col-xs-12 col-sm-8 col-md-8">
 
-        <div class="col-xs-12 col-sm-8">
-            @RenderBody()
-        </div>
+                @RenderBody()
+            </div>
     </div>
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <script src="~/Scripts/JavaScript.js"></script>
