@@ -5,12 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h5 class="text-center">Kategoria: @Model.Category</h5>
+
+<h2 class="text-center">@Model.Name</h2>
+
+<br />
+
 @if (Model.ImageData != null)
 {
-    <div class="pull-left" style="margin-right: 10px">
-        <img class="img" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+    <div>
+        <img class="img img-center" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
     </div>
 }
 
-<h2>@Model.Name</h2>
+<br />
+<br />
+
+@using (Html.BeginForm("AddToCart", "Cart"))
+{
+
+    <div class="text-center">
+        <span class="price">@Model.Price zł</span>
+        @Html.HiddenFor(x => x.ProductId)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" class="btn btn-success add-cart" value="Dodaj do koszyka" />
+    </div>
+}
+    <br />
+
+<hr />
+
+<h4 class="text-center">@Model.Description</h4>
+
+<hr />
 
