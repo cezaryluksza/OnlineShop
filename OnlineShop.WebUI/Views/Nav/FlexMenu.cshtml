@@ -31,7 +31,7 @@
                 @foreach (var link in Model.Categories)
                 {
                     @Html.RouteLink(link, new { controller = "Product", action = "List", category = link, page = 1},
-                    new {@class = (horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg" ) + (link == ViewBag.SelectedCategory ? " btn-primary" : "") })
+                                    new {@class = "btn btn-block btn-default btn-lg" + (link == ViewBag.SelectedCategory ? " btn-primary" : "") })
                 }
             </div>
         </div>
@@ -54,19 +54,13 @@
                     }
                     if (ViewBag.SelectedCategory == null)
                     {
-                        @Html.ActionLink($"{OnlineShop.WebUI.Helpers.EnumHelper.GetDescription(link)}", "List", "Product", new { sortingOption = link, page = 1 },
-                                 new
-                                 {
-                                     @class = (horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg") + (link == ViewBag.SelectedSortingOption ? " btn-primary" : "")
-                                 })
+                        @Html.RouteLink(OnlineShop.WebUI.Helpers.EnumHelper.GetDescription(link), new { controller = "Product", action = "List", sortingOption = link, page = 1 },
+                                        new { @class = "btn btn-block btn-default btn-lg" + (link == ViewBag.SelectedSortingOption ? " btn-primary" : "")})
                     }
                     else
                     {
-                        @Html.ActionLink($"{OnlineShop.WebUI.Helpers.EnumHelper.GetDescription(link)}", "List", "Product", new { category = ViewBag.SelectedCategory, sortingOption = link, page = 1 },
-                                          new
-                                          {
-                                              @class = (horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg") + (link == ViewBag.SelectedSortingOption ? " btn-primary" : "")
-                                          })
+                        @Html.RouteLink(OnlineShop.WebUI.Helpers.EnumHelper.GetDescription(link), new { controller = "Product", action = "List", category = ViewBag.SelectedCategory, sortingOption = link, page = 1 },
+                                        new{@class = "btn btn-block btn-default btn-lg" + (link == ViewBag.SelectedSortingOption ? " btn-primary" : "")})
                     }
                 }
             </div>
