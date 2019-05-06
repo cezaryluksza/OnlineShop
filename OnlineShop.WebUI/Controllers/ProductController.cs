@@ -20,26 +20,24 @@ namespace OnlineShop.WebUI.Controllers
         }
 
 
-        public ViewResult List(string category, int page = 1, SortingType sortingType = 0)
+        public ViewResult List(string category, int page = 1, SortingType sortingOption = 0)
         {
             var products = repository.Products.Where(x => category == null || x.Category == category).OrderBy(x => x.ProductId).Skip((page - 1) * PageSize);
 
-            //var sortingType = SortingHelper.GetEnumEnglishName(sorting);
-
-            switch (sortingType)
+            switch (sortingOption)
             {
                 case SortingType.NoSorting:
                     break;
-                case SortingType.NajwyzszaCena:
+                case SortingType.HighestPrice:
                     products = products.OrderByDescending(x => x.Price);
                         break;
-                case SortingType.NajnizszaCena:
+                case SortingType.LowestPrice:
                     products = products.OrderBy(x => x.Price);
                     break;
-                case SortingType.Popularnosc:
+                case SortingType.MostPopular:
                     products = products.OrderByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits);
                     break;
-                case SortingType.Komentarze:
+                case SortingType.LargestNumberOfComments:
                     products = products.OrderByDescending(x => x.NumberOfComments).ThenByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits).ThenBy(x => x.ProductId);
                     break;
                 default:
@@ -56,7 +54,7 @@ namespace OnlineShop.WebUI.Controllers
                     TotalItems = category == null ? repository.Products.Count() : repository.Products.Where(e => e.Category == category).Count()
                 },
                 CurrentCategory = category,
-                CurrentSorting = sortingType
+                CurrentSorting = sortingOption
             };
             return View(model);
         }

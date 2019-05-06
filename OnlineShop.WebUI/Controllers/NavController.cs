@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
+using OnlineShop.WebUI.Helpers;
 using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI.Controllers
@@ -18,18 +19,20 @@ namespace OnlineShop.WebUI.Controllers
             repository = repo;
         }
         
-        public PartialViewResult Menu(string category = null, SortingType sortingType = 0)
+        public PartialViewResult Menu(string category = null, SortingType sortingOption = 0)
         { 
             ViewBag.SelectedCategory = category;
-            ViewBag.SelectedSorting = sortingType;
+            ViewBag.SelectedSortingOption = sortingOption;
 
             MenuViewModel menuViewModel = new MenuViewModel();
 
             menuViewModel.Categories = repository.Products.Select(x => x.Category).Distinct().OrderBy(x => x);
             menuViewModel.SortingOptions = Enum.GetValues(typeof(SortingType)).Cast<SortingType>();
 
+
             return PartialView("FlexMenu", menuViewModel);
         }
+
 
     }
 }

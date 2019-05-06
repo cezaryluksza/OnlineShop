@@ -8,18 +8,18 @@ namespace OnlineShop.WebUI.Models
 {
     public enum SortingType
     {
-        [Description("NoSorting")]
+        [Description("Brak Sortowania")]
         NoSorting = 0,
-        [Description("HighestPrice")]
-        NajwyzszaCena = 1,
-        [Description("LowestPrice")]
-        NajnizszaCena = 2,
-        [Description("MostPopular")]
-        Popularnosc = 3,
-        [Description("HighestRating")]
-        Ocena = 4,
-        [Description("LargestNumberOfComments")]
-        Komentarze = 5,
+        [Description("Najwyższa cena")]
+        HighestPrice = 1,
+        [Description("Najniższa cena")]
+        LowestPrice = 2,
+        [Description("Najbardziej popularne")]
+        MostPopular = 3,
+        [Description("Najwyżej oceniane")]
+        HighestRating = 4,
+        [Description("Największa liczba komentarzy")]
+        LargestNumberOfComments = 5,
     }
 
 
