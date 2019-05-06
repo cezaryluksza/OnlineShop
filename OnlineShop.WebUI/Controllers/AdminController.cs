@@ -20,6 +20,11 @@ namespace OnlineShop.WebUI.Controllers
 
         public ViewResult Index()
         {
+            return View();
+        }
+
+        public ViewResult Products()
+        {
             return View(repository.Products);
         }
 

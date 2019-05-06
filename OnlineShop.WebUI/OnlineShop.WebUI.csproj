@@ -120,6 +120,7 @@
     <Content Include="Content\Images\LogoMobile.png" />
     <Content Include="Content\main.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\admin.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -188,6 +189,7 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
+    <Content Include="Views\Admin\Products.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

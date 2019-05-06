@@ -8,7 +8,8 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
-    <title></title>
+    <link href="~/Content/admin.css" rel="stylesheet" />
+    <title>Sklep online CŁ - Admin</title>
 </head>
 <body>
     <div>
@@ -16,6 +17,17 @@
         {
             <div class="alert alert-success">@TempData["message"]</div>
         }
+
+            <div class="nav">
+                <div class="navbar">
+                    <ul>
+                        <li><a href="/Admin/Products">Produkty</a></li>
+                        <li><a href="/Admin/Categories">Kategorie</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
         @RenderBody()
     </div>
     <script src="~/Scripts/jquery-1.10.2.js"></script>
