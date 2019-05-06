@@ -4,6 +4,8 @@
     ViewBag.Title = "Produkty";
 }
 
+
+
 @foreach (var p in Model.Products)
 {
     @Html.Partial("ProductSummary", p);

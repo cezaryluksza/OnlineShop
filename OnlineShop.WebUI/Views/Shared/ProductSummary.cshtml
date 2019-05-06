@@ -1,28 +1,32 @@
-﻿@model OnlineShop.Domain.Entities.Product
+﻿@using OnlineShop.WebUI.Helpers
+@model OnlineShop.Domain.Entities.Product
 
-<div class="well">
+<div class="product-box">
     @*<a href="@Url.Action("Product", new { @Model.ProductId })">*@
-    @Html.RouteLink(Model.Name, new { controller = "Product", action="Product", productId = Model.ProductId, productName = Model.Name})
-        @if (Model.ImageData != null)
-        {
-            <div class="pull-left" style="margin-right: 10px">
-                <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
-            </div>
-        }
-
-        <h3>
-            <strong>@Model.Name</strong>
-            <span class="pull-right label label-primary">@Model.Price.ToString("c")</span>
-        </h3>
-    @*</a>*@
-    @using (Html.BeginForm("AddToCart", "Cart"))
+    @*Html.RouteLink(Model.Name, new { controller = "Product", action="Product", productId = Model.ProductId, productName = Model.Name})*@
+    @if (Model.ImageData != null)
     {
-        <div class="pull-right">
-            @Html.HiddenFor(x => x.ProductId)
-            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-            <input type="submit" class="btn btn-success" value="Dodaj do koszyka" />
+        <div class="img-product">
+            <img class="img-thumbnail" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
         </div>
+
+
     }
 
-    <span class="lead">@Model.Description</span>
+    <h4 class="product">
+        @Html.RouteLink(Model.Name, new { controller = "Product", action = "Product", productId = Model.ProductId, productName = SEOHelper.EscapeUrl(Model.Name) })
+
+    </h4>
+    <h4 class="pull-right">@Model.Price.ToString("c")</h4>
+    @*</a>*@
+    @*@using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="pull-right">
+                @Html.HiddenFor(x => x.ProductId)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Dodaj do koszyka" />
+            </div>
+        }*@
+
+    @*<span class="lead">@Model.Description</span>*@
 </div>

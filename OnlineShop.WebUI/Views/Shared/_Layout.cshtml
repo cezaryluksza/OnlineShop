@@ -19,16 +19,15 @@
         @Html.Action("Summary", "Cart")
     </div>
     <div class="hidden-lg">
-        @Html.Action("Menu", "Nav", new { mobileNav = true })
+        @*Html.Action("Menu", "Nav", new { mobileNav = true })*@
     </div>
     <div class="row panel">
         <div class="col-sm-3 visible-lg">
             @Html.Action("Menu", "Nav")
         </div>
-            <div class="col-xs-12 col-sm-8 col-md-8">
-
-                @RenderBody()
-            </div>
+        <div class="col-xs-12 col-sm-8 col-md-8">
+            @RenderBody()
+        </div>
     </div>
     <script src="~/Scripts/jquery-1.10.2.js"></script>
     <script src="~/Scripts/JavaScript.js"></script>
