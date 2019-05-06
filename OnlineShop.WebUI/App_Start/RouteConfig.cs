@@ -17,11 +17,19 @@ namespace OnlineShop.WebUI
 
             routes.MapRoute(null, "Strona{page}", new { controller = "Product", action = "List", category = (string)null }, new { page = @"\d+" });
 
-            routes.MapRoute(null, "{category}", new { controller = "Product", action = "List", page = 1 });
+            routes.MapRoute(null, "k/{category}", new { controller = "Product", action = "List", page = 1 });
 
-            routes.MapRoute(null, "{category}/Strona{page}", new { controller = "Product", action = "List" }, new { page = @"\d+" });
+            routes.MapRoute(null, "k/{category}/Strona{page}", new { controller = "Product", action = "List" }, new { page = @"\d+" });
 
-            routes.MapRoute(null, "Produkt/{productName}", new { controller = "Product", action = "Product" });
+            routes.MapRoute(null, "s/{sortingOption}", new { controller = "Product", action = "List", page = 1 });
+
+            routes.MapRoute(null, "s/{sortingOption}/Strona{page}", new { controller = "Product", action = "List" }, new { page = @"\d+" });
+
+            routes.MapRoute(null, "k/{category}/s/{sortingOption}", new { controller = "Product", action = "List", page = 1 });
+
+            routes.MapRoute(null, "k/{category}/s/{sortingOption}/Strona{page}", new { controller = "Product", action = "List" }, new { page = @"\d+" });
+
+            routes.MapRoute(null, "p/{productName}/{productId}", new { controller = "Product", action = "Product" });
 
             routes.MapRoute(null, "{controller}/{action}");
 
