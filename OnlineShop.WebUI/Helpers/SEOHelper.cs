@@ -10,7 +10,17 @@ namespace OnlineShop.WebUI.Helpers
     {
         public static string EscapeUrl(string url)
         {
-            return url.Replace(' ', '-');
+            url = url.Replace(' ', '-');
+            url = url.ToLower();
+            url = url.Replace('ą', 'a');
+            url = url.Replace('ć', 'c');
+            url = url.Replace('ę', 'e');
+            url = url.Replace('ł', 'l');
+            url = url.Replace('ó', 'o');
+            url = url.Replace('ś', 's');
+            url = url.Replace('ź', 'z');
+            url = url.Replace('ż', 'z');
+            return url;
         }
     }
 }
