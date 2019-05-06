@@ -131,7 +131,6 @@ namespace OnlineShop.UnitTests
         public void CanCreateCategories()
         {
             //Arrange
-            // - create te mock repository
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
                 {
@@ -143,8 +142,8 @@ namespace OnlineShop.UnitTests
             NavController target = new NavController(mock.Object);
 
 
-            //Act - get the set of category
-            string[] results = ((IEnumerable<string>)target.Menu().Model).ToArray();
+            //Act
+            string[] results = ((MenuViewModel)target.Menu().Model).Categories.ToArray();
 
             //Assert
             Assert.AreEqual(results.Length, 3);
@@ -224,7 +223,7 @@ namespace OnlineShop.UnitTests
             ProductController productController = new ProductController(mock.Object);
 
             //Act
-            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.NajwyzszaCena).Model).Products.ToArray();
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.HighestPrice).Model).Products.ToArray();
 
             //Assert
             Assert.AreEqual(1500M, result[0].Price);
@@ -251,7 +250,7 @@ namespace OnlineShop.UnitTests
             ProductController productController = new ProductController(mock.Object);
 
             //Act
-            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.NajnizszaCena).Model).Products.ToArray();
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.LowestPrice).Model).Products.ToArray();
 
             //Assert
             Assert.AreEqual(90M, result[0].Price);
@@ -279,7 +278,7 @@ namespace OnlineShop.UnitTests
             ProductController productController = new ProductController(mock.Object);
 
             //Act
-            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.Popularnosc).Model).Products.ToArray();
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.MostPopular).Model).Products.ToArray();
 
             //Assert
             Assert.AreEqual("Produkt6", result[0].Name);
@@ -308,7 +307,7 @@ namespace OnlineShop.UnitTests
             ProductController productController = new ProductController(mock.Object);
 
             //Act
-            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.Komentarze).Model).Products.ToArray();
+            Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.LargestNumberOfComments).Model).Products.ToArray();
 
             //Assert
             Assert.AreEqual("Produkt2", result[0].Name);
