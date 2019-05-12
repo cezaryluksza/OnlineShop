@@ -124,7 +124,12 @@ namespace OnlineShop.UnitTests
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Apples"},
+                    new Product
+                    {
+                        ProductId = 1,
+                        Name = "P1",
+                        Category = new Category {CategoryName = "Apples" }
+                    },
 
                 }.AsQueryable());
 
@@ -147,7 +152,7 @@ namespace OnlineShop.UnitTests
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Apples"},
+                    new Product {ProductId = 1, Name = "P1", Category = new Category { CategoryName = "Apples"}},
 
                 }.AsQueryable());
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Moq;
@@ -29,7 +28,7 @@ namespace OnlineShop.UnitTests
                 new Product { ProductId = 5, Name = "P5"}
             });
 
-            ProductController controller = new ProductController(mock.Object)
+            ProductController controller = new ProductController(mock.Object, null)
             {
                 PageSize = 3
             };
@@ -84,7 +83,7 @@ namespace OnlineShop.UnitTests
             });
 
             //Arrange
-            ProductController controller = new ProductController(mock.Object);
+            ProductController controller = new ProductController(mock.Object, null);
             controller.PageSize = 3;
 
             //Act
@@ -102,28 +101,27 @@ namespace OnlineShop.UnitTests
         public void CanFilterProducts()
         {
             //Arrange
-            //create the mock repository
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Cat1"},
-                    new Product {ProductId = 2, Name = "P2", Category = "Cat2"},
-                    new Product {ProductId = 3, Name = "P3", Category = "Cat1"},
-                    new Product {ProductId = 4, Name = "P4", Category = "Cat2"},
-                    new Product {ProductId = 5, Name = "P5", Category = "Cat3"}
+                    new Product {ProductId = 1, Name = "P1", Category = new Category { CategoryName = "Cat1" }},
+                    new Product {ProductId = 2, Name = "P2", Category = new Category { CategoryName = "Cat2" }},
+                    new Product {ProductId = 3, Name = "P3", Category = new Category { CategoryName = "Cat1" }},
+                    new Product {ProductId = 4, Name = "P4", Category = new Category { CategoryName = "Cat2" }},
+                    new Product {ProductId = 5, Name = "P5", Category = new Category { CategoryName = "Cat3" }}
                 });
 
-            //Arrange - create a controller and mage the page size 3 items
-            ProductController controller = new ProductController(mock.Object);
+            ProductController controller = new ProductController(mock.Object, null);
             controller.PageSize = 3;
+            Category category = new Category { CategoryName = "Cat2" };
 
             //Act
-            Product[] result = ((ProductsListViewModel)controller.List("Cat2", 1).Model).Products.ToArray();
+            Product[] result = ((ProductsListViewModel)controller.List(category.CategoryName, 1).Model).Products.ToArray();
 
             //Assert
             Assert.AreEqual(result.Length, 2);
-            Assert.IsTrue(result[0].Name == "P2" && result[0].Category == "Cat2");
-            Assert.IsTrue(result[1].Name == "P4" && result[1].Category == "Cat2");
+            Assert.IsTrue(result[0].Name == "P2" && result[0].Category.CategoryName == "Cat2");
+            Assert.IsTrue(result[1].Name == "P4" && result[1].Category.CategoryName == "Cat2");
         }
 
 
@@ -131,25 +129,25 @@ namespace OnlineShop.UnitTests
         public void CanCreateCategories()
         {
             //Arrange
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products).Returns(new Product[]
+            Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
+            mock.Setup(m => m.Categories).Returns(new Category[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Apples"},
-                    new Product {ProductId = 2, Name = "P2", Category = "Apples"},
-                    new Product {ProductId = 3, Name = "P3", Category = "Plums"},
-                    new Product {ProductId = 4, Name = "P4", Category = "Oranges"}
+                    new Category { CategoryName = "Apples" },
+                    new Category { CategoryName = "Apples" },
+                    new Category { CategoryName = "Plums" },
+                    new Category { CategoryName = "Oranges" }
                 });
             NavController target = new NavController(mock.Object);
-
+            
 
             //Act
-            string[] results = ((MenuViewModel)target.Menu().Model).Categories.ToArray();
+            Category[] results = ((MenuViewModel)target.Menu().Model).Categories.Distinct().ToArray();
 
             //Assert
             Assert.AreEqual(results.Length, 3);
-            Assert.AreEqual(results[0], "Apples");
-            Assert.AreEqual(results[1], "Oranges");
-            Assert.AreEqual(results[2], "Plums");
+            Assert.AreEqual(results[0].CategoryName, "Apples");
+            Assert.AreEqual(results[2].CategoryName, "Oranges");
+            Assert.AreEqual(results[1].CategoryName, "Plums");
 
         }
 
@@ -157,19 +155,19 @@ namespace OnlineShop.UnitTests
         public void IndicatesSelectedCategory()
         {
             //Arrange
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products).Returns(new Product[]
+            Mock<ICategoryRepository> mock = new Mock<ICategoryRepository>();
+            mock.Setup(m => m.Categories).Returns(new Category[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Apples"},
-                    new Product {ProductId = 2, Name = "P2", Category = "Oranges"},
+                    new Category { CategoryName = "Apples"},
+                    new Category { CategoryName = "Oranges"}
                 });
 
             NavController target = new NavController(mock.Object);
 
-            string categoryToSelect = "Apples";
+            Category categoryToSelect = new Category { CategoryName = "Apples" };
 
             //Act
-            string result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
+            Category result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
 
             //Assert
             Assert.AreEqual(categoryToSelect, result);
@@ -182,14 +180,14 @@ namespace OnlineShop.UnitTests
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[]
                 {
-                    new Product {ProductId = 1, Name = "P1", Category = "Cat1"},
-                    new Product {ProductId = 2, Name = "P2", Category = "Cat2"},
-                    new Product {ProductId = 3, Name = "P3", Category = "Cat1"},
-                    new Product {ProductId = 4, Name = "P4", Category = "Cat2"},
-                    new Product {ProductId = 5, Name = "P5", Category = "Cat3"}
+                    new Product {ProductId = 1, Name = "P1", Category = new Category { CategoryName = "Cat1"}},
+                    new Product {ProductId = 2, Name = "P2", Category = new Category { CategoryName = "Cat2"}},
+                    new Product {ProductId = 3, Name = "P3", Category = new Category { CategoryName = "Cat1"}},
+                    new Product {ProductId = 4, Name = "P4", Category = new Category { CategoryName = "Cat2"}},
+                    new Product {ProductId = 5, Name = "P5", Category = new Category { CategoryName = "Cat3"}}
                 });
 
-            ProductController target = new ProductController(mock.Object);
+            ProductController target = new ProductController(mock.Object, null);
             target.PageSize = 3;
 
             //Act
@@ -220,7 +218,7 @@ namespace OnlineShop.UnitTests
                     new Product { ProductId = 5, Name = "Produkt5", Price = 1500M }
                 });
 
-            ProductController productController = new ProductController(mock.Object);
+            ProductController productController = new ProductController(mock.Object, null);
 
             //Act
             Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.HighestPrice).Model).Products.ToArray();
@@ -247,7 +245,7 @@ namespace OnlineShop.UnitTests
                     new Product { ProductId = 5, Name = "Produkt5", Price = 1500M }
                 });
 
-            ProductController productController = new ProductController(mock.Object);
+            ProductController productController = new ProductController(mock.Object, null);
 
             //Act
             Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.LowestPrice).Model).Products.ToArray();
@@ -275,7 +273,7 @@ namespace OnlineShop.UnitTests
                     new Product { ProductId = 6, Name = "Produkt6", Price = 1500M, Visits = 4000, NumberOfBought = 3600 }
                 });
 
-            ProductController productController = new ProductController(mock.Object);
+            ProductController productController = new ProductController(mock.Object, null);
 
             //Act
             Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.MostPopular).Model).Products.ToArray();
@@ -304,7 +302,7 @@ namespace OnlineShop.UnitTests
                     new Product { ProductId = 6, Name = "Produkt6", NumberOfComments = 0 }
                 });
 
-            ProductController productController = new ProductController(mock.Object);
+            ProductController productController = new ProductController(mock.Object, null);
 
             //Act
             Product[] result = ((ProductsListViewModel)productController.List(null, 1, SortingType.LargestNumberOfComments).Model).Products.ToArray();

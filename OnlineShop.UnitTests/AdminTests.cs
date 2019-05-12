@@ -24,10 +24,10 @@ namespace OnlineShop.UnitTests
                 new Product {ProductId = 3, Name = "P3"},
             });
 
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
             // Action
-            Product[] result = ((IEnumerable<Product>)target.Index().
+            Product[] result = ((IEnumerable<Product>)target.Products().
             ViewData.Model).ToArray();
 
             // Assert
@@ -47,7 +47,7 @@ namespace OnlineShop.UnitTests
                 new Product {ProductId = 2, Name = "P2"},
                 new Product {ProductId = 3, Name = "P3"},
             });
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
             //Act
             Product p1 = target.Edit(1).ViewData.Model as Product;
@@ -71,7 +71,7 @@ namespace OnlineShop.UnitTests
                 new Product {ProductId = 3, Name = "P3"},
             });
 
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
             //Act
             Product result = (Product)target.Edit(4).ViewData.Model;
@@ -86,7 +86,7 @@ namespace OnlineShop.UnitTests
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
 
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
             Product product = new Product { Name = "Test" };
 
@@ -105,7 +105,7 @@ namespace OnlineShop.UnitTests
             //Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
 
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
 
             Product product = new Product { Name = "Test" };
@@ -130,7 +130,7 @@ namespace OnlineShop.UnitTests
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] { new Product {ProductId = 1, Name = "P1"}, prod, new Product {ProductId = 3, Name = "P3"}, });
 
-            AdminController target = new AdminController(mock.Object);
+            AdminController target = new AdminController(mock.Object, null);
 
             // Act
             target.Delete(prod.ProductId);
