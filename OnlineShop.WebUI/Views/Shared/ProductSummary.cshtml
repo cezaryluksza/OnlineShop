@@ -8,7 +8,7 @@
     {
     <div class="img-product">
         <a href="@Url.RouteUrl("", new { controller = "Product", action = "Product", productId = Model.ProductId, productName = SEOHelper.EscapeUrl(Model.Name) })">
-            <img class="img-thumbnail" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+            <img class="img-thumbnail" src="@Url.Action("GetImageThumbnail", "Product", new { Model.ProductId })" />
         </a>
     </div>
 
