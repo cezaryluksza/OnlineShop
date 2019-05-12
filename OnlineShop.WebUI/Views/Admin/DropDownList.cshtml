@@ -1,0 +1,4 @@
+﻿@model OnlineShop.WebUI.Models.CategoryViewModel
+
+
+@Html.DropDownListFor(m => m.CategoryId, Model.Categories, "-- Wybierz kategorię --", new { @id = "Category", @name = "Category", @class = "form-control" })

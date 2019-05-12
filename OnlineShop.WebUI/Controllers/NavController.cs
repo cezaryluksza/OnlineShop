@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
+using OnlineShop.Domain.Entities;
 using OnlineShop.WebUI.Helpers;
 using OnlineShop.WebUI.Models;
 
@@ -12,22 +13,23 @@ namespace OnlineShop.WebUI.Controllers
 {
     public class NavController : Controller
     {
-        private IProductRepository repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public NavController(IProductRepository repo)
+        public NavController(ICategoryRepository categoryRepo)
         {
-            repository = repo;
+            _categoryRepository = categoryRepo;
         }
         
-        public PartialViewResult Menu(string category = null, SortingType sortingOption = 0)
-        { 
+        public PartialViewResult Menu(string category, SortingType sortingOption = 0)
+        {
             ViewBag.SelectedCategory = category;
             ViewBag.SelectedSortingOption = sortingOption;
 
-            MenuViewModel menuViewModel = new MenuViewModel();
-
-            menuViewModel.Categories = repository.Products.Select(x => x.Category).Distinct().OrderBy(x => x);
-            menuViewModel.SortingOptions = Enum.GetValues(typeof(SortingType)).Cast<SortingType>();
+            var menuViewModel = new MenuViewModel
+            {
+                Categories = _categoryRepository.Categories,
+                SortingOptions = Enum.GetValues(typeof(SortingType)).Cast<SortingType>()
+            };
 
 
             return PartialView("FlexMenu", menuViewModel);

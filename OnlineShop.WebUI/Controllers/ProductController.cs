@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
-using OnlineShop.Domain.Entities;
 using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductRepository repository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
         public int PageSize = 10;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepo)
         {
-            this.repository = productRepository;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepo;
         }
 
 
         public ViewResult List(string category, int page = 1, SortingType sortingOption = 0)
         {
-            var products = repository.Products.Where(x => category == null || x.Category == category).OrderBy(x => x.ProductId).Skip((page - 1) * PageSize);
+
+
+            int categoryId = _categoryRepository.GetCategoryId(category);
+            var products = _productRepository.Products.Where(x => category == null || x.CategoryId == categoryId).OrderBy(x => x.ProductId).Skip((page - 1) * PageSize);
 
             switch (sortingOption)
             {
@@ -40,18 +41,15 @@ namespace OnlineShop.WebUI.Controllers
                 case SortingType.LargestNumberOfComments:
                     products = products.OrderByDescending(x => x.NumberOfComments).ThenByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits).ThenBy(x => x.ProductId);
                     break;
-                default:
-                    break;
-
             }
-            ProductsListViewModel model = new ProductsListViewModel
+            var model = new ProductsListViewModel
             {
                 Products = products,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = category == null ? repository.Products.Count() : repository.Products.Where(e => e.Category == category).Count()
+                    TotalItems = category == null ? _productRepository.Products.Count() : _productRepository.Products.Count(e => e.CategoryId == categoryId)
                 },
                 CurrentCategory = category,
                 CurrentSorting = sortingOption
@@ -61,20 +59,22 @@ namespace OnlineShop.WebUI.Controllers
 
         public FileContentResult GetImage(int productId)
         {
-            Product prod = repository.Products.FirstOrDefault(p => p.ProductId == productId);
-            if (prod != null)
+            var prod = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
+            return prod != null ? File(prod.ImageData, prod.ImageMimeType) : null;
+        }
+        public FileContentResult GetImageThumbnail(int productId)
+        {
+            var prod = _productRepository.Products.First(p => p.ProductId == productId);
+            if (prod.ImageDataThumbnail == null)
             {
-                return File(prod.ImageData, prod.ImageMimeType);
+                return GetImage(productId);
             }
-            else
-            {
-                return null;
-            }
+            return prod != null ? File(prod.ImageDataThumbnail, prod.ImageMimeType) : null;
         }
 
         public ActionResult Product(int productId)
         {
-            Product product = repository.Products.FirstOrDefault(x => x.ProductId == productId);
+            var product = _productRepository.Products.FirstOrDefault(x => x.ProductId == productId);
             return View(product);
         }
     }

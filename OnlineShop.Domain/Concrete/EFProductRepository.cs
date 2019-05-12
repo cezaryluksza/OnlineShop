@@ -33,7 +33,11 @@ namespace OnlineShop.Domain.Concrete
                     dbEntry.Price = product.Price;
                     dbEntry.Category = product.Category;
                     if (product.ImageData != null)
+                    {
                         dbEntry.ImageData = product.ImageData;
+                        dbEntry.ImageDataThumbnail = product.ImageDataThumbnail;
+                    }
+
                     if (product.ImageMimeType != null)
                         dbEntry.ImageMimeType = product.ImageMimeType;
                 }
@@ -49,6 +53,16 @@ namespace OnlineShop.Domain.Concrete
                 context.SaveChanges();
             }
             return dbEntry;
+        }
+
+        public IEnumerable<Product> MapProducts()
+        {
+            var products = context.Products;
+            foreach (var product in products)
+            {
+                //product.Category = context.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
+            }
+            return products;
         }
     }
 }

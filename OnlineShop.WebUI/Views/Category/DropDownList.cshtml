@@ -1,0 +1,5 @@
+﻿@model IEnumerable<OnlineShop.Domain.Entities.Category>
+
+@{ }
+
+@Html.DropDownListFor(model => model.ElementAt(0).CategoryName, Model as List<SelectListItem>, "-- Wybierz kategorię --")

@@ -1,7 +1,8 @@
-﻿using OnlineShop.Domain.Abstract;
+﻿using System.Drawing;
+using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
+using OnlineShop.WebUI.Helpers;
+using OnlineShop.WebUI.Models;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,11 +12,13 @@ namespace OnlineShop.WebUI.Controllers
     [Authorize]
     public class AdminController : Controller
     {
-        private IProductRepository repository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public AdminController(IProductRepository repo)
+        public AdminController(IProductRepository repo, ICategoryRepository categoryRepo)
         {
-            repository = repo;
+            _productRepository = repo;
+            _categoryRepository = categoryRepo;
         }
 
         public ViewResult Index()
@@ -23,14 +26,24 @@ namespace OnlineShop.WebUI.Controllers
             return View();
         }
 
+        #region Product
         public ViewResult Products()
         {
-            return View(repository.Products);
+            var products = _productRepository.Products;
+            foreach (var product in products)
+            {
+                product.Category = _categoryRepository.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
+            }
+            return View(_productRepository.Products);
+        }
+        public ViewResult Create()
+        {
+            return View("Edit", new Product());
         }
 
         public ViewResult Edit(int productId)
         {
-            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product product = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
             return View(product);
         }
 
@@ -44,8 +57,10 @@ namespace OnlineShop.WebUI.Controllers
                     product.ImageMimeType = image.ContentType;
                     product.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(product.ImageData, 0, image.ContentLength);
+                    product.ImageDataThumbnail = ImageHelper.CreateThumbnail(Image.FromStream(image.InputStream, true, true), 200, 200);
                 }
-                repository.SaveProduct(product);
+                
+                _productRepository.SaveProduct(product);
                 TempData["message"] = string.Format($"Zapisano {product.Name} ");
                 return RedirectToAction("Index");
             }
@@ -55,20 +70,65 @@ namespace OnlineShop.WebUI.Controllers
             }
         }
 
-        public ViewResult Create()
-        {
-            return View("Edit", new Product());
-        }
 
         [HttpPost]
         public ActionResult Delete(int productId)
         {
-            Product deletedProduct = repository.DeleteProduct(productId);
+            Product deletedProduct = _productRepository.DeleteProduct(productId);
             if (deletedProduct != null)
             {
                 TempData["message"] = string.Format($"Usunięto {deletedProduct.Name}");
             }
             return RedirectToAction("Index");
         }
+        #endregion  
+
+        #region Category
+
+        public ViewResult EditCategory(int categoryId)
+        {
+            Category category = _categoryRepository.Categories.FirstOrDefault(x => x.CategoryId == categoryId);
+            return View(category);
+        }
+        [HttpPost]
+        public ActionResult EditCategory(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _categoryRepository.SaveCategory(category);
+                TempData["message"] = string.Format($"Zapisano {category.CategoryName} ");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(category);
+            }
+        }
+
+        public ViewResult Categories()
+        {
+            return View(_categoryRepository.Categories);
+        }
+
+        public ViewResult CreateCategory()
+        {
+            return View("EditCategory", new Category());
+        }
+
+        [ChildActionOnly]
+        public ActionResult DropDownList()
+        {
+            var categories = _categoryRepository.Categories.Distinct();
+            var viewmodel = new CategoryViewModel
+            {
+                Categories = new SelectList(categories, "CategoryId", "CategoryName")
+            };
+
+            return PartialView(viewmodel);
+        }
+        #endregion
+
+
+
     }
 }

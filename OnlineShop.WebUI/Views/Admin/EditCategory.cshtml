@@ -1,0 +1,40 @@
+﻿@using System.Web.Razor.Generator
+@model OnlineShop.Domain.Entities.Category
+@{
+    ViewBag.Title = "Admin: Edycja " + @Model.CategoryName;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container panel">
+    <div class="panel-heading">
+        <h3>Edycja @Model.CategoryName</h3>
+    </div>
+    @using (Html.BeginForm("EditCategory", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.CategoryId)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "CategoryId": 
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+        </div>
+        
+
+        <div class="panel-footer">
+            <input type="submit" value="Zapisz" class="btn btn-primary" />
+            @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new {
+            @class = "btn btn-default"
+            })
+        </div>
+    }
+</div>

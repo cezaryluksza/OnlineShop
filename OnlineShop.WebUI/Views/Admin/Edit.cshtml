@@ -21,25 +21,30 @@
                     case "Visits":
                     case "NumberOfBought":
                     case "NumberOfComments":
-                        //brak operacji
+                    case "CategoryId":
+                    case "ImageDataThumbnail":
                         break;
                     default:
 
 
-                    <div class="form-group">
-                        <label>@(property.DisplayName ?? property.PropertyName)</label>
-                        @if (property.PropertyName == "Description")
-                        {
-                            @Html.TextArea(property.PropertyName, null,
-                            new { @class = "form-control", rows = 5 })
-                        }
-                        else
-                        {
-                            @Html.TextBox(property.PropertyName, null,
-                            new { @class = "form-control" })
-                        }
-                        @Html.ValidationMessage(property.PropertyName)
-                    </div>
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @if (property.PropertyName == "Description")
+                {
+                    @Html.TextArea(property.PropertyName, null,
+                    new { @class = "form-control", rows = 5 })
+                }
+                else if (property.PropertyName == "Category")
+                {
+                    @Html.Action("DropDownList", "Admin")
+                }
+                else
+                {
+                    @Html.TextBox(property.PropertyName, null,
+                    new { @class = "form-control" })
+                }
+                @Html.ValidationMessage(property.PropertyName)
+            </div>
                         break;
                 }
             }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Razor.Generator;
 
 namespace OnlineShop.Domain.Entities
 {
@@ -28,7 +29,10 @@ namespace OnlineShop.Domain.Entities
 
         [Required(ErrorMessage = "Proszę określić kategorię.")]
         [Display(Name = "Kategoria")]
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
+
+        [Display(Name = "Kategoria")]
+        public Category Category { get; set; }
 
         [HiddenInput(DisplayValue = false)]
         public int Visits { get; set; }
@@ -40,6 +44,8 @@ namespace OnlineShop.Domain.Entities
         public int NumberOfComments { get; set; }
 
         public byte[] ImageData { get; set; }
+        
+        public byte[] ImageDataThumbnail { get; set; }
 
         public string ImageMimeType { get; set; }
     }

@@ -1,33 +1,29 @@
-﻿@model IEnumerable<OnlineShop.Domain.Entities.Product>
+﻿@model IEnumerable<OnlineShop.Domain.Entities.Category>
 @{
-    ViewBag.Title = "Admin: Wszystkie produkty";
+    ViewBag.Title = "Admin: Kategorie";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container panel panel-default">
     <div class="">
-        <h3>Produkty</h3>
+        <h3>Kategorie</h3>
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
             <tr>
                 <th class="text-right">Id</th>
                 <th>Nazwa</th>
-                <th>Kategoria</th>
-                <th class="text-right">Cena</th>
-                <th class="text-center">Akcje</th>
+                <th>Akcje</th>
             </tr>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="text-right">@item.ProductId</td>
-                    <td>@Html.ActionLink(item.Name, "Edit", new { item.ProductId })</td>
-                    <td>@(item.Category == null ? null : item.Category.CategoryName)</td>
-                    <td class="text-right">@item.Price.ToString("c")</td>
+                    <td class="text-right">@item.CategoryId</td>
+                    <td>@Html.ActionLink(item.CategoryName, "EditCategory", new { item.CategoryId })</td>
                     <td class="text-center">
-                        @using (Html.BeginForm("Delete", "Admin"))
+                        @using (Html.BeginForm("DeleteCategory", "Admin"))
                         {
-                            @Html.Hidden("ProductId", item.ProductId)
+                            @Html.Hidden("CategoryId", item.CategoryId)
                             <input type="submit"
                                    class="btn btn-default btn-xs"
                                    value="Usuń" />
@@ -38,7 +34,7 @@
         </table>
     </div>
     <div style="margin-bottom: 10px;">
-        @Html.ActionLink("Dodaj nowy produkt", "Create", null,
+        @Html.ActionLink("Dodaj nową kategorię", "CreateCategory", null,
         new { @class = "btn btn-default" })
     </div>
 </div>

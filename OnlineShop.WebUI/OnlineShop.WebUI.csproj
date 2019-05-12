@@ -151,6 +151,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Helpers\SEOHelper.cs" />
     <Compile Include="Infrastructure\Abstract\IAuthProvider.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Infrastructure\Concrete\FormsAuthProvider.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\CartIndexViewModel.cs" />
+    <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
@@ -190,6 +192,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Category\DropDownList.cshtml" />
+    <Content Include="Views\Admin\EditCategory.cshtml" />
+    <Content Include="Views\Admin\Categories.cshtml" />
+    <Content Include="Views\Admin\DropDownList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
