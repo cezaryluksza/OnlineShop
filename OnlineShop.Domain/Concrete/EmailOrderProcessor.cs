@@ -1,18 +1,19 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Entities;
 namespace OnlineShop.Domain.Concrete
 {
     public class EmailSettings
     {
-        public string MailToAddress = "orders@example.com";
-        public string MailFromAddress = "onlineshop@example.com";
+        public string MailToAddress = "sklep@cezaryluksza.pl";
+        public string MailFromAddress = "sklep@cezaryluksza.pl";
         public bool UseSsl = true;
-        public string Username = "MySmtpUsername";
-        public string Password = "MySmtpPassword";
-        public string ServerName = "smtp.example.com";
+        public string Username = "cezaryluksza";
+        public string Password = "1234";
+        public string ServerName = "smtp.cezaryluksza.pl";
         public int ServerPort = 587;
         public bool WriteAsFile = false;
         public string FileLocation = @"c:\online_shop_emails";
@@ -44,30 +45,33 @@ namespace OnlineShop.Domain.Concrete
                     smtpClient.EnableSsl = false;
                 }
                 StringBuilder body = new StringBuilder()
-                .AppendLine("Nowe zamówienie")
+                    .AppendLine("<html><head></head><body>")
+                    .AppendLine("Nowe zamówienie")
                 .AppendLine("---")
                 .AppendLine("Produkty:");
                 foreach (var line in cart.Lines)
                 {
                     var subtotal = line.Product.Price * line.Quantity;
-                    body.AppendFormat("{0} x {1} (subtotal: {2:c}", line.Quantity,
-                    line.Product.Name,
-                    subtotal);
+                    body.AppendFormat("{0} x {1} (subtotal: {2:c}", line.Quantity, line.Product.Name, subtotal);
                 }
+
                 body.AppendFormat("Wartość całkowita: {0:c}", cart.ComputeTotalValue())
-                .AppendLine("---")
-                .AppendLine("Wysyłka dla:")
-                .AppendLine(shippingInfo.Name)
-                .AppendLine(shippingInfo.Line1)
-                .AppendLine(shippingInfo.Line2 ?? "")
-                .AppendLine(shippingInfo.Line3 ?? "")
-                .AppendLine(shippingInfo.City)
-                .AppendLine(shippingInfo.State ?? "")
-                .AppendLine(shippingInfo.Country)
-                .AppendLine(shippingInfo.Zip)
-                .AppendLine("---")
-                .AppendFormat("Pakowanie prezentu: {0}",
-                shippingInfo.GiftWrap ? "Tak" : "Nie");
+                    .AppendLine("---")
+                    .AppendLine("Wysyłka dla:")
+                    .AppendLine(shippingInfo.Name)
+                    .AppendLine(shippingInfo.Line1)
+                    .AppendLine(shippingInfo.Line2 ?? "")
+                    .AppendLine(shippingInfo.Line3 ?? "")
+                    .AppendLine(shippingInfo.City)
+                    .AppendLine(shippingInfo.State ?? "")
+                    .AppendLine(shippingInfo.Country)
+                    .AppendLine(shippingInfo.Zip)
+                    .AppendLine("---")
+                    .AppendFormat("Pakowanie prezentu: {0}",
+                        shippingInfo.GiftWrap ? "Tak" : "Nie")
+                    .AppendLine()
+                    .AppendLine("<img src='~/Content/Images/LogoMobile.png'>")
+                    .AppendLine("</body></html>");
                 MailMessage mailMessage = new MailMessage(
                 emailSettings.MailFromAddress, // od
                 emailSettings.MailToAddress, // do
@@ -76,7 +80,7 @@ namespace OnlineShop.Domain.Concrete
 
                 if (emailSettings.WriteAsFile)
                 {
-                    mailMessage.BodyEncoding = Encoding.ASCII;
+                    mailMessage.BodyEncoding = Encoding.UTF8;
                 }
                 smtpClient.Send(mailMessage);
             }

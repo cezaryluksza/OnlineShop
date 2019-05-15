@@ -64,7 +64,7 @@ namespace OnlineShop.WebUI.Controllers
         [HttpPost]
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {
-            if (cart.Lines.Count() == 0)
+            if (!cart.Lines.Any())
             {
                 ModelState.AddModelError("", "Koszyk jest pusty!");
             }

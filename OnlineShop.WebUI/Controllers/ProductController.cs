@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
+using OnlineShop.Domain.Entities;
 using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI.Controllers
@@ -9,7 +11,7 @@ namespace OnlineShop.WebUI.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public int PageSize = 10;
+        public int PageSize = 16;
 
         public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepo)
         {
@@ -20,10 +22,8 @@ namespace OnlineShop.WebUI.Controllers
 
         public ViewResult List(string category, int page = 1, SortingType sortingOption = 0)
         {
-
-
             int categoryId = _categoryRepository.GetCategoryId(category);
-            var products = _productRepository.Products.Where(x => category == null || x.CategoryId == categoryId).OrderBy(x => x.ProductId).Skip((page - 1) * PageSize);
+            IEnumerable<Product> products = _productRepository.Products.OrderBy(x => x.ProductId);
 
             switch (sortingOption)
             {
@@ -42,6 +42,12 @@ namespace OnlineShop.WebUI.Controllers
                     products = products.OrderByDescending(x => x.NumberOfComments).ThenByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits).ThenBy(x => x.ProductId);
                     break;
             }
+
+            if (page == 1)
+                products = products.Where(x => category == null || x.CategoryId == categoryId).Take(PageSize);
+            else
+                products = products.Where(x => category == null || x.CategoryId == categoryId).Skip((page - 1) * PageSize);
+
             var model = new ProductsListViewModel
             {
                 Products = products,
