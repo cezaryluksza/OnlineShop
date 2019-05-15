@@ -141,7 +141,7 @@ namespace OnlineShop.UnitTests
             
 
             //Act
-            Category[] results = ((MenuViewModel)target.Menu().Model).Categories.Distinct().ToArray();
+            Category[] results = ((MenuViewModel)target.Menu(null).Model).Categories.Distinct().ToArray();
 
             //Assert
             Assert.AreEqual(results.Length, 3);
@@ -167,7 +167,7 @@ namespace OnlineShop.UnitTests
             Category categoryToSelect = new Category { CategoryName = "Apples" };
 
             //Act
-            Category result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
+            Category result = target.Menu(categoryToSelect.CategoryName).ViewBag.SelectedCategory;
 
             //Assert
             Assert.AreEqual(categoryToSelect, result);

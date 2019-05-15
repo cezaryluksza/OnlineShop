@@ -16,6 +16,7 @@ namespace OnlineShop.WebUI
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace OnlineShop.WebUI.Infrastructure
 
             _kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
 
-            _kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
+            //_kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
 
             _kernel.Bind<ICategoryRepository>().To<EFCategoryRepository>();
 

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace OnlineShop.WebUI.Controllers
 {
-    [Authorize]
+    
     public class AdminController : Controller
     {
         private readonly IProductRepository _productRepository;

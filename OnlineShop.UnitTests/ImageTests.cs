@@ -37,7 +37,7 @@ namespace OnlineShop.UnitTests
                 new Product { ProductId = 3, Name = "P3"}
             }.AsQueryable());
 
-            ProductController target = new ProductController(mock.Object);
+            ProductController target = new ProductController(mock.Object, null);
             //Act
             ActionResult result = target.GetImage(2);
 
@@ -59,7 +59,7 @@ namespace OnlineShop.UnitTests
                 new Product { ProductId = 2, Name = "P2"}
             }.AsQueryable());
 
-            ProductController target = new ProductController(mock.Object);
+            ProductController target = new ProductController(mock.Object, null);
             //Act
             ActionResult result = target.GetImage(100);
 
