@@ -11,6 +11,7 @@ using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI.Controllers
 {
+    [AllowAnonymous]
     public class NavController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;

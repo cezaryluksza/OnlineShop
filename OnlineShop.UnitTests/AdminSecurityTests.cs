@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using OnlineShop.WebUI.Controllers;
-using OnlineShop.WebUI.Infrastructure.Abstract;
+//using OnlineShop.WebUI.Infrastructure.Abstract;
 using OnlineShop.WebUI.Models;
 using System;
 using System.Collections.Generic;

@@ -7,6 +7,7 @@ using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;

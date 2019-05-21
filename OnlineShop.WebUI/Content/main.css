@@ -7,10 +7,18 @@
 .panel {
     background-color: #fbf8f8;
 }
+@media (min-width: 1200px) {
+    .navbar { height: 75px; }
+}
+@media (min-width: 767px) and (max-width: 1199px) {
+    .navbar { height: 65px; }
+}
+
 
 .navbar-custom {
-    background-color: #229922;
+    background-color: gray;
     border-radius: 0;
+    max-height: 300px;
 }
 .navbar-right {
     float: right;

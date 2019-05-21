@@ -3,7 +3,7 @@ using Moq;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Entities;
 using OnlineShop.WebUI.Controllers;
-using OnlineShop.WebUI.Infrastructure.Abstract;
+//using OnlineShop.WebUI.Infrastructure.Abstract;
 using OnlineShop.WebUI.Models;
 using System;
 using System.Collections.Generic;

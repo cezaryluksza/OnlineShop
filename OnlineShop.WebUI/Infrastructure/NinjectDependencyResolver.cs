@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using Ninject;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Concrete;
-using OnlineShop.WebUI.Infrastructure.Abstract;
+//using OnlineShop.WebUI.Infrastructure.Abstract;
 using OnlineShop.WebUI.Infrastructure.Concrete;
 
 namespace OnlineShop.WebUI.Infrastructure

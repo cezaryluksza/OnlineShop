@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace OnlineShop.WebUI.Controllers
 {
+    [AllowAnonymous]
     public class CartController : Controller
     {
         private IProductRepository repository;
