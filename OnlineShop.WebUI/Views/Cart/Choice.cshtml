@@ -1,0 +1,11 @@
+﻿@model OnlineShop.Domain.Entities.ShippingDetails
+
+
+@{
+    ViewBag.Title = "Sklep online: Logowanie";
+}
+
+<div class="text-center">
+    @Html.ActionLink("Zaloguj się", "CheckoutLogin", "", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Złóż zamówienie jako gość", "Checkout", null, new { @class = "btn btn-primary" })
+</div>

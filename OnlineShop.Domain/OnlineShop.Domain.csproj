@@ -80,11 +80,11 @@
     <Compile Include="Concrete\EFCategoryRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
-    <Compile Include="Concrete\EmailOrderProcessor.cs" />
+    <Compile Include="Concrete\OrderProcessor.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Cart.cs" />
-    <Compile Include="Entities\CartLinesByOrder.cs" />
+    <Compile Include="Entities\OrderByCartLines.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
@@ -129,6 +129,14 @@
     <Compile Include="Migrations\201905250929547_Order_Fix.Designer.cs">
       <DependentUpon>201905250929547_Order_Fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905251118364_Order_Fix2.cs" />
+    <Compile Include="Migrations\201905251118364_Order_Fix2.Designer.cs">
+      <DependentUpon>201905251118364_Order_Fix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905251124439_Order_Fix21.cs" />
+    <Compile Include="Migrations\201905251124439_Order_Fix21.Designer.cs">
+      <DependentUpon>201905251124439_Order_Fix21.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,6 +176,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905250929547_Order_Fix.resx">
       <DependentUpon>201905250929547_Order_Fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905251118364_Order_Fix2.resx">
+      <DependentUpon>201905251118364_Order_Fix2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905251124439_Order_Fix21.resx">
+      <DependentUpon>201905251124439_Order_Fix21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

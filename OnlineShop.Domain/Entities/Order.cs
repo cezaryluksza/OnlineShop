@@ -8,9 +8,6 @@ namespace OnlineShop.Domain.Entities
         public int OrderId { get; set; }
 
         [Required]
-        public CartLinesByOrder CartLinesByOrder { get; set; }
-
-        [Required]
         public ShippingDetails ShippingDetails { get; set; }
         
         public ApplicationUser User { get; set; }

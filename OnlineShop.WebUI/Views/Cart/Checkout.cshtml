@@ -14,7 +14,7 @@
 
     <h3>Wysyłka dla</h3>
     <div class="form-group">
-        <label>Nazwisko:</label>
+        <label>Imię i nazwisko:</label>
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
     </div>
 
@@ -22,7 +22,7 @@
 
     foreach (var property in ViewData.ModelMetadata.Properties)
     {
-        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap" && property.PropertyName != "ShippingDetailsId")
         {
             <div class="form-group">
                 <label>@(property.DisplayName ?? property.PropertyName)</label>

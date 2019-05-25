@@ -3,7 +3,7 @@
 
 namespace OnlineShop.Domain.Entities
 {
-    public class CartLinesByOrder
+    public class OrderByCartLines
     {
         [Key]
         public int CartLinesByOrderId { get; set; }

@@ -1,9 +1,13 @@
-﻿using System.Net;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Entities;
+
 namespace OnlineShop.Domain.Concrete
 {
     public class EmailSettings
@@ -15,18 +19,27 @@ namespace OnlineShop.Domain.Concrete
         public string Password = "1234";
         public string ServerName = "smtp.cezaryluksza.pl";
         public int ServerPort = 587;
-        public bool WriteAsFile = false;
+        public bool WriteAsFile = true;
         public string FileLocation = @"c:\online_shop_emails";
     }
-    public class EmailOrderProcessor : IOrderProcessor
+
+    public class OrderProcessor : IOrderProcessor
     {
         private EmailSettings emailSettings;
-        public EmailOrderProcessor(EmailSettings settings)
+
+        public OrderProcessor(EmailSettings settings)
         {
             emailSettings = settings;
         }
 
-        public void ProcessOrder(Cart cart, ShippingDetails shippingInfo)
+
+        public void ProcessOrder(Cart cart, ShippingDetails shippingInfo, string userId = null)
+        {
+            SaveToDatabase(cart, shippingInfo, userId);
+            SendEmail(cart, shippingInfo);
+        }
+
+        public void SendEmail(Cart cart, ShippingDetails shippingInfo)
         {
             using (var smtpClient = new SmtpClient())
             {
@@ -83,6 +96,45 @@ namespace OnlineShop.Domain.Concrete
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }
                 smtpClient.Send(mailMessage);
+            }
+        }
+
+        public void SaveToDatabase(Cart cart, ShippingDetails shippingInfo, string userId)
+        {
+            using (EFDbContext context = new EFDbContext())
+            {
+                ApplicationUser currentUser = null;
+                if (userId != null)
+                {
+                    currentUser = context.Users.FirstOrDefault(x => x.Id == userId);
+                }
+
+                var order = new Order();
+
+                order.ShippingDetails = shippingInfo;
+                order.User = currentUser;
+                context.Orders.Add(order);
+                context.SaveChanges();
+
+
+                foreach (var line in cart.Lines)
+                {
+
+                    var cartLine = new CartLine();
+                    cartLine.Product = line.Product;
+                    cartLine.Quantity = line.Quantity;
+                    context.Cartlines.Add(cartLine);
+
+                    var orderByCartLines = new OrderByCartLines();
+                    orderByCartLines.CartLine = cartLine;
+                    orderByCartLines.OrderId = order.OrderId;
+                    context.OrderByCartLines.Add(orderByCartLines);
+                }
+
+     
+
+
+                
             }
         }
     }

@@ -6,19 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace OnlineShop.WebUI.Controllers
 {
     [AllowAnonymous]
     public class CartController : Controller
     {
-        private IProductRepository repository;
-        private IOrderProcessor orderProcessor;
+        private readonly IProductRepository _repository;
+        private readonly IOrderProcessor _orderProcessor;
 
         public CartController(IProductRepository repo, IOrderProcessor proc)
         {
-            repository = repo;
-            orderProcessor = proc;
+            _repository = repo;
+            _orderProcessor = proc;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -32,7 +34,7 @@ namespace OnlineShop.WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
         {
-            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product product = _repository.Products.FirstOrDefault(p => p.ProductId == productId);
 
             if (product != null)
             {
@@ -43,7 +45,7 @@ namespace OnlineShop.WebUI.Controllers
 
         public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
         {
-            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product product = _repository.Products.FirstOrDefault(p => p.ProductId == productId);
 
             if (product != null)
             {
@@ -62,6 +64,11 @@ namespace OnlineShop.WebUI.Controllers
             return View(new ShippingDetails());
         }
 
+        public ViewResult Choice()
+        {
+            return View(new ShippingDetails());
+        }
+
         [HttpPost]
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {
@@ -71,13 +78,39 @@ namespace OnlineShop.WebUI.Controllers
             }
             if (ModelState.IsValid)
             {
-                orderProcessor.ProcessOrder(cart, shippingDetails);
+                _orderProcessor.ProcessOrder(cart, shippingDetails, null);
                 cart.Clear();
                 return View("Completed");
             }
             else
             {
                 return View(shippingDetails);
+            }
+        }
+
+        public ViewResult CheckoutLogin()
+        {
+            return View("Checkout", new ShippingDetails());
+        }
+
+        [Authorize(Roles="Administrator,User")]
+        [HttpPost]
+        public ViewResult CheckoutLogin(Cart cart, ShippingDetails shippingDetails)
+        {
+            var userId = User.Identity.GetUserId();
+            if (!cart.Lines.Any())
+            {
+                ModelState.AddModelError("", "Koszyk jest pusty!");
+            }
+            if (ModelState.IsValid)
+            {
+                _orderProcessor.ProcessOrder(cart, shippingDetails, userId);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View("Checkout", shippingDetails);
             }
         }
     }

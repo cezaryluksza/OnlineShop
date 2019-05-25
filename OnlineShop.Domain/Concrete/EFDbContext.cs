@@ -19,7 +19,7 @@ namespace OnlineShop.Domain.Concrete
         public DbSet<Category> Categories { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<CartLine> Cartlines { get; set; }
-        public DbSet<CartLinesByOrder> CartLinesByOrder { get; set; }
+        public DbSet<OrderByCartLines> OrderByCartLines { get; set; }
         public DbSet<Order> Orders { get; set; }
 
 
