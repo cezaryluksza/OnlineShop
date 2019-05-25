@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace OnlineShop.WebUI.Controllers
 {
     
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -24,6 +24,7 @@ namespace OnlineShop.WebUI.Controllers
 
         public ViewResult Index()
         {
+            
             return View();
         }
 

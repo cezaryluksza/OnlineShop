@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Startup.cs" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -225,7 +226,6 @@
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\CartIndexViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
-    <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
@@ -259,12 +259,7 @@
     <Content Include="Views\Admin\EditCategory.cshtml" />
     <Content Include="Views\Admin\Categories.cshtml" />
     <Content Include="Views\Admin\DropDownList.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />

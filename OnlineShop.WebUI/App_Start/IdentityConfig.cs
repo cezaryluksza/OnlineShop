@@ -5,11 +5,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using OnlineShop.Domain.Concrete;
+using OnlineShop.Domain.Entities;
 using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.WebUI
@@ -42,7 +45,7 @@ namespace OnlineShop.WebUI
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<EFDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -61,7 +64,7 @@ namespace OnlineShop.WebUI
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
+            manager.UserLockoutEnabledByDefault = false;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
