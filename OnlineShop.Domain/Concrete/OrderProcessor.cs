@@ -110,12 +110,11 @@ namespace OnlineShop.Domain.Concrete
                 }
 
                 var order = new Order();
-
                 order.ShippingDetails = shippingInfo;
                 order.User = currentUser;
                 context.Orders.Add(order);
-                context.SaveChanges();
 
+                context.SaveChanges();
 
                 foreach (var line in cart.Lines)
                 {
@@ -131,10 +130,7 @@ namespace OnlineShop.Domain.Concrete
                     context.OrderByCartLines.Add(orderByCartLines);
                 }
 
-     
-
-
-                
+                context.SaveChanges();
             }
         }
     }
