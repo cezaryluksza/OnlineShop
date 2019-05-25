@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace OnlineShop.Domain.Entities
 {
     public class ShippingDetails
     {
+        [Key]
+        public int ShippingDetailsId { get; set; }
+
         [Required(ErrorMessage = "Proszę podać nazwisko.")]
         public string Name { get; set; }
 

@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.AccessControl;
+
 
 namespace OnlineShop.Domain.Entities
 {
     public class Cart
     {
+        [Key]
+        public int CartId { get; set; }
         private List<CartLine> lineCollection = new List<CartLine>();
 
         public void AddItem(Product product, int quantity)
         {
-            CartLine line = lineCollection.Where(p => p.Product.ProductId == product.ProductId).FirstOrDefault();
+            CartLine line = lineCollection.FirstOrDefault(p => p.Product.ProductId == product.ProductId);
 
             if (line == null)
             {
@@ -44,6 +46,8 @@ namespace OnlineShop.Domain.Entities
 
     public class CartLine
     {
+        [Key]
+        public int CartLineId { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
     }

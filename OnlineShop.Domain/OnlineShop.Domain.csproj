@@ -84,7 +84,9 @@
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Cart.cs" />
+    <Compile Include="Entities\CartLinesByOrder.cs" />
     <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Migrations\201904032018035_InitialCreate.cs" />
@@ -119,6 +121,14 @@
     <Compile Include="Migrations\201905250816121_AddressesFix.Designer.cs">
       <DependentUpon>201905250816121_AddressesFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905250905296_Order.cs" />
+    <Compile Include="Migrations\201905250905296_Order.Designer.cs">
+      <DependentUpon>201905250905296_Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905250929547_Order_Fix.cs" />
+    <Compile Include="Migrations\201905250929547_Order_Fix.Designer.cs">
+      <DependentUpon>201905250929547_Order_Fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -152,6 +162,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905250816121_AddressesFix.resx">
       <DependentUpon>201905250816121_AddressesFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905250905296_Order.resx">
+      <DependentUpon>201905250905296_Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905250929547_Order_Fix.resx">
+      <DependentUpon>201905250929547_Order_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

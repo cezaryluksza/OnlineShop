@@ -7,7 +7,7 @@ namespace OnlineShop.Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public Addresses Address { get; set; }
+        public Address Address { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
