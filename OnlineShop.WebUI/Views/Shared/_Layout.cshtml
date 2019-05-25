@@ -16,7 +16,9 @@
             <img class="visible-md visible-sm" src="~/Content/Images/LogoMd.png">
             <img class="visible-xs" src="~/Content/Images/LogoMobile.png">
         </a>
+
         @Html.Action("Summary", "Cart")
+        @Html.Partial("_LoginPartial")
     </div>
     <div class="hidden-lg">
         @*Html.Action("Menu", "Nav", new { mobileNav = true })*@
