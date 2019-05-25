@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OnlineShop.WebUI.Models;
 
 namespace OnlineShop.Console
 {
@@ -18,10 +21,25 @@ namespace OnlineShop.Console
                 using (EFDbContext context = new EFDbContext())
                 {
 
-                    var category = new Category()
+                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                    if (!roleManager.RoleExists("User"))
                     {
-                        CategoryName = "Elektronika"
-                    };
+                        var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                        role.Name = "User";
+                        roleManager.Create(role);
+                    }
+
+                    if (!roleManager.RoleExists("Administrator"))
+                    {
+                        var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                        role.Name = "Administrator";
+                        roleManager.Create(role);
+                    }
+
+                    //var category = new Category()
+                    //{
+                    //    CategoryName = "Elektronika"
+                    //};
 
                     //var category2 = new Category()
                     //{
@@ -32,23 +50,23 @@ namespace OnlineShop.Console
 
                     //list = list.Distinct().ToList();
 
-                    
+
                     //foreach (var item in list)
                     //{
                     //    System.Console.WriteLine(item.);
                     //}
 
-                    context.Categories.Add(category);
+                    //context.Categories.Add(category);
 
-                    var product = new Product()
-                    {
-                        Name = "Testowy produkt10",
-                        Description = "Testowy opis10 źćłąęż",
-                        Price = 89.99M,
-                        Category = category
+                    //var product = new Product()
+                    //{
+                    //    Name = "Testowy produkt10",
+                    //    Description = "Testowy opis10 źćłąęż",
+                    //    Price = 89.99M,
+                    //    Category = category
 
-                    };
-                    context.Products.Add(product);
+                    //};
+                    //context.Products.Add(product);
 
 
 
