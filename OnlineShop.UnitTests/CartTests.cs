@@ -200,7 +200,7 @@ namespace OnlineShop.UnitTests
             ViewResult result = target.Checkout(cart, shippingDetails);
 
             //Assert
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>(), null),
             Times.Never());
 
             Assert.AreEqual("", result.ViewName);
@@ -224,7 +224,7 @@ namespace OnlineShop.UnitTests
             ViewResult result = target.Checkout(cart, new ShippingDetails());
 
             //Assert
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>(), null), Times.Never());
 
             Assert.AreEqual("", result.ViewName);
 
@@ -246,7 +246,7 @@ namespace OnlineShop.UnitTests
             ViewResult result = target.Checkout(cart, new ShippingDetails());
 
             //Assert
-            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>(), null),
             Times.Once());
 
             Assert.AreEqual("Completed", result.ViewName);

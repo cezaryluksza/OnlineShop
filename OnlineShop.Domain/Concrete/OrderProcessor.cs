@@ -122,12 +122,8 @@ namespace OnlineShop.Domain.Concrete
                     var cartLine = new CartLine();
                     cartLine.Product = line.Product;
                     cartLine.Quantity = line.Quantity;
+                    cartLine.OrderId = order.OrderId;
                     context.Cartlines.Add(cartLine);
-
-                    var orderByCartLines = new OrderByCartLines();
-                    orderByCartLines.CartLine = cartLine;
-                    orderByCartLines.OrderId = order.OrderId;
-                    context.OrderByCartLines.Add(orderByCartLines);
                 }
 
                 context.SaveChanges();

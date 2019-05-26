@@ -13,11 +13,11 @@ namespace OnlineShop.Domain.Entities
         public int AddressId { get; set; }
 
         [Required(ErrorMessage = "Proszę podać pierwszy wiersz adresu.")]
-        [Display(Name = "Wiersz 1")]
+        [Display(Name = "Ulica")]
         public string Line1 { get; set; }
-        [Display(Name = "Wiersz 2")]
+        [Display(Name = "Numer domu")]
         public string Line2 { get; set; }
-        [Display(Name = "Wiersz 3")]
+        [Display(Name = "Numer mieszkania")]
         public string Line3 { get; set; }
 
         [Required(ErrorMessage = "Proszę podać nazwę miasta.")]
