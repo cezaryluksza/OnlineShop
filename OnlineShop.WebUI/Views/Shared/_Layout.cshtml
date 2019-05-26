@@ -23,15 +23,21 @@
     <div class="hidden-lg">
         @*Html.Action("Menu", "Nav", new { mobileNav = true })*@
     </div>
-    <div class="row panel">
-        <div class="col-sm-3 visible-lg">
-            @Html.Action("Menu", "Nav")
-        </div>
-        <div class="col-xs-12 col-sm-8 col-md-8">
-            @RenderBody()
-        </div>
+<div class="row panel">
+    <div class="col-sm-3 visible-lg">
+        @Html.Action("Menu", "Nav")
     </div>
-    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        @RenderBody()
+    </div>
+</div>
+<section id="map">
+    <div class="iframe-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9770.748758838785!2d20.9893859!3d52.2490652!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9e084209594a5b38!2sWarszawska+Wy%C5%BCsza+Szko%C5%82a+Informatyki!5e0!3m2!1spl!2spl!4v1547914130397" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
     <script src="~/Scripts/JavaScript.js"></script>
     @RenderSection("scripts", required: false)
 </body>

@@ -1,0 +1,95 @@
+﻿@using System.Web.Optimization
+@model OnlineShop.WebUI.Models.IndexViewModel
+@{
+    ViewBag.Title = "Sklep online - Edycja danych osobowych";
+}
+
+<h2>Edycja danych osobowych</h2>
+
+@using (Html.BeginForm("EditPersonalData", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.Address.Line1, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.Line1)
+            @Html.TextBoxFor(m => m.Address.Line1, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.Line2, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.Line2)
+            @Html.TextBoxFor(m => m.Address.Line2, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.Line3, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.Line3)
+            @Html.TextBoxFor(m => m.Address.Line3, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.State, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.State)
+            @Html.TextBoxFor(m => m.Address.State, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.Zip, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.Zip)
+            @Html.TextBoxFor(m => m.Address.Zip, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.City, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.City)
+            @Html.TextBoxFor(m => m.Address.City, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address.Country, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.Address.Country)
+            @Html.TextBoxFor(m => m.Address.Country, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.PhoneNumber)
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Zatwierdź" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

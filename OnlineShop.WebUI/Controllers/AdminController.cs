@@ -128,6 +128,17 @@ namespace OnlineShop.WebUI.Controllers
 
             return PartialView(viewmodel);
         }
+
+        [HttpPost]
+        public ActionResult DeleteCategory(int categoryId)
+        {
+            Category deletedCategory = _categoryRepository.DeleteCategory(categoryId);
+            if (deletedCategory != null)
+            {
+                TempData["message"] = string.Format($"Usunięto {deletedCategory.CategoryName}");
+            }
+            return RedirectToAction("Index");
+        }
         #endregion
 
 

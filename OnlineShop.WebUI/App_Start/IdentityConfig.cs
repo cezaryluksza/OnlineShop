@@ -26,14 +26,6 @@ namespace OnlineShop.WebUI
         }
     }
 
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
-    }
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
@@ -80,7 +72,6 @@ namespace OnlineShop.WebUI
                 BodyFormat = "Your security code is {0}"
             });
             manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
@@ -88,6 +79,92 @@ namespace OnlineShop.WebUI
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+        public async Task<IdentityResult> ChangePersonalData(IndexViewModel model, string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    var cUser = context.Users.Find(userId);
+
+                    var address = context.Addresses.FirstOrDefault(x => 
+                                      x.City == model.Address.City &&
+                                      x.Country == model.Address.Country &&
+                                      x.Line1 == model.Address.Line1 &&
+                                      x.Line2 == model.Address.Line2 &&
+                                      x.Line3 == model.Address.Line3 &&
+                                      x.State == model.Address.State &&
+                                      x.Zip == model.Address.Zip
+                                  ) ?? model.Address;
+
+                    cUser.Address = address;
+                    cUser.FirstName = model.FirstName;
+                    cUser.LastName = model.LastName;
+                    cUser.PhoneNumber = model.PhoneNumber;
+
+                    await context.SaveChangesAsync();
+                }
+                return IdentityResult.Success;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+        public string GetFirstName(string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    return context.Users.Find(userId).FirstName;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+        public string GetLastName(string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    return context.Users.Find(userId).LastName;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+        }
+
+        public Address GetAddress(string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    var user = context.Users.Find(userId);
+                    return context.Addresses.Find(user.AddressId);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 

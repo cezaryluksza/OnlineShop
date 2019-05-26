@@ -20,32 +20,67 @@
             ]
         </dd>
         
-        @*<dt>Imię:</dt>
         <dd>
             [
-            @if (Model.FirstName)
-            {
-                @Html.ActionLink("Zmień hasło", "ChangePassword")
-            }
+            @Html.ActionLink("Zmień dane osobowe", "EditPersonalData")
             ]
-        </dd>*@
+        </dd>
+
+        <dt>Imię:</dt>
+        <dd>
+            @if (Model.FirstName != null)
+            {
+                <text>@Model.FirstName</text>
+            }
+        </dd>
+        
+        <dt>Nazwisko:</dt>
+        <dd>
+            @if (Model.LastName != null)
+            {
+                <text>@Model.LastName</text>
+            }
+        </dd>
+        
+        <dt>Adres:</dt>
+        <dd>
+            @if (Model.Address != null)
+            {
+                <text>@Model.Address.Line1 @Model.Address.Line2
+                @if (Model.Address.Line3 != null)
+                {
+                    <text> / @Model.Address.Line3</text>
+                }
+                </text>
+            }
+        </dd><dt>Województwo:</dt><dd>
+            @if (Model.Address != null)
+            {
+                <text>@Model.Address.State</text>
+            }
+        </dd>
+        
+        <dt>Kod pocztowy:</dt>
+        <dd>
+            @if (Model.Address != null)
+            {
+                <text>@Model.Address.Zip</text>
+            }
+        </dd>
+        
+        <dt>Kraj:</dt>
+        <dd>
+            @if (Model.Address != null)
+            {
+                <text>@Model.Address.Country</text>
+            }
+        </dd>
 
         <dt>Numer telefonu:</dt>
         <dd>
-            @(Model.PhoneNumber ?? "Brak")
             @if (Model.PhoneNumber != null)
             {
-                <br />
-                <text>[&nbsp;&nbsp;@Html.ActionLink("Zmień", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                }
-            }
-            else
-            {
-                <text>[&nbsp;&nbsp;@Html.ActionLink("Dodaj", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                <text>@Model.PhoneNumber</text>
             }
         </dd>
         
