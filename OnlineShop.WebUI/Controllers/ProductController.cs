@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System;
 using System.Web.Mvc;
 using OnlineShop.Domain.Abstract;
 using OnlineShop.Domain.Entities;
@@ -30,6 +32,12 @@ namespace OnlineShop.WebUI.Controllers
             {
                 case SortingType.NoSorting:
                     break;
+                case SortingType.NameAZ:
+                    products = products.OrderBy(x => x.Name);
+                    break;
+                case SortingType.NameZA:
+                    products = products.OrderByDescending(x => x.Name);
+                    break;
                 case SortingType.HighestPrice:
                     products = products.OrderByDescending(x => x.Price);
                         break;
@@ -38,9 +46,6 @@ namespace OnlineShop.WebUI.Controllers
                     break;
                 case SortingType.MostPopular:
                     products = products.OrderByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits);
-                    break;
-                case SortingType.LargestNumberOfComments:
-                    products = products.OrderByDescending(x => x.NumberOfComments).ThenByDescending(x => x.NumberOfBought).ThenByDescending(x => x.Visits).ThenBy(x => x.ProductId);
                     break;
             }
 
@@ -72,7 +77,7 @@ namespace OnlineShop.WebUI.Controllers
         public FileContentResult GetImageThumbnail(int productId)
         {
             var prod = _productRepository.Products.First(p => p.ProductId == productId);
-            if (prod.ImageDataThumbnail == null)
+            if (prod?.ImageDataThumbnail == null)
             {
                 return GetImage(productId);
             }
@@ -82,6 +87,15 @@ namespace OnlineShop.WebUI.Controllers
         public ActionResult Product(int productId)
         {
             var product = _productRepository.Products.FirstOrDefault(x => x.ProductId == productId);
+            product.Category = _categoryRepository.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
+
+            var visited = Convert.ToBoolean(System.Web.HttpContext.Current.Session["VisitedId: " + productId]);
+            if (!visited)
+            {
+                System.Web.HttpContext.Current.Session["VisitedId: " + productId] = true;
+                product.Visits++;
+                _productRepository.SaveProduct(product);
+            }
             return View(product);
         }
     }
