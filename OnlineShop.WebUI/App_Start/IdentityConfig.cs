@@ -166,6 +166,40 @@ namespace OnlineShop.WebUI
             }
 
         }
+
+        public static Address GetAddressByUserId(string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    var user = context.Users.Find(userId);
+                    return context.Addresses.Find(user.AddressId);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public static string GetName(string userId)
+        {
+            try
+            {
+                using (EFDbContext context = new EFDbContext())
+                {
+                    return context.Users.Find(userId).FirstName + " " + context.Users.Find(userId).LastName;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 
     // Configure the application sign-in manager which is used in this application.
