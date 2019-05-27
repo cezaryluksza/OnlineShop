@@ -47,50 +47,45 @@ namespace OnlineShop.Domain.Concrete
                 smtpClient.Host = emailSettings.ServerName;
                 smtpClient.Port = emailSettings.ServerPort;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials
-                = new NetworkCredential(emailSettings.Username,
+                smtpClient.Credentials = new NetworkCredential(emailSettings.Username,
                 emailSettings.Password);
                 if (emailSettings.WriteAsFile)
                 {
-                    smtpClient.DeliveryMethod
-                    = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
                     smtpClient.PickupDirectoryLocation = emailSettings.FileLocation;
                     smtpClient.EnableSsl = false;
                 }
+                
                 StringBuilder body = new StringBuilder()
                     .AppendLine("<html><head></head><body>")
                     .AppendLine("Nowe zamówienie")
-                .AppendLine("---")
-                .AppendLine("Produkty:");
+                .AppendLine("<br/>---<br/>")
+                .AppendLine("Produkty:<br/>");
                 foreach (var line in cart.Lines)
                 {
                     var subtotal = line.Product.Price * line.Quantity;
-                    body.AppendFormat("{0} x {1} (subtotal: {2:c}", line.Quantity, line.Product.Name, subtotal);
+                    body.AppendFormat("{0} x {1}", line.Quantity, line.Product.Name);
                 }
-
-                body.AppendFormat("Wartość całkowita: {0:c}", cart.ComputeTotalValue())
-                    .AppendLine("---")
-                    .AppendLine("Wysyłka dla:")
-                    .AppendLine(shippingInfo.Name)
-                    .AppendLine(shippingInfo.Line1)
-                    .AppendLine(shippingInfo.Line2 ?? "")
-                    .AppendLine(shippingInfo.Line3 ?? "")
-                    .AppendLine(shippingInfo.City)
-                    .AppendLine(shippingInfo.State ?? "")
+                body.AppendFormat("<br/>Wartość całkowita: {0:c}", cart.ComputeTotalValue())
+                    .AppendLine("<br/>---<br/>")
+                    .AppendLine("Wysyłka dla:<br />")
+                    .AppendLine(shippingInfo.Name + "<br/>")
+                    .AppendLine(shippingInfo.Line1 + " ")
+                    .AppendLine(shippingInfo.Line2 + " ")
+                    .AppendLine(shippingInfo.Line3 + "<br />")
+                    .AppendLine(shippingInfo.Zip + "<br />")
+                    .AppendLine(shippingInfo.City + "<br />")
+                    .AppendLine(shippingInfo.State + "<br />")
                     .AppendLine(shippingInfo.Country)
-                    .AppendLine(shippingInfo.Zip)
-                    .AppendLine("---")
+                    .AppendLine("<br />---<br />")
                     .AppendFormat("Pakowanie prezentu: {0}",
-                        shippingInfo.GiftWrap ? "Tak" : "Nie")
+                        shippingInfo.GiftWrap ? "Tak <br />" : "Nie <br />")
                     .AppendLine()
-                    .AppendLine("<img src='~/Content/Images/LogoMobile.png'>")
+                    .AppendLine("<br /><br /><img src='https://i.imgur.com/rtnePfb.png'>")
                     .AppendLine("</body></html>");
-                MailMessage mailMessage = new MailMessage(
-                emailSettings.MailFromAddress, // od
-                emailSettings.MailToAddress, // do
-                "Otrzymano nowe zamówienie!", // temat
-                body.ToString()); // treść
+                MailMessage mailMessage = new MailMessage(emailSettings.MailFromAddress, emailSettings.MailToAddress, "Otrzymano nowe zamówienie!", body.ToString());
 
+                mailMessage.IsBodyHtml = true;
                 if (emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;

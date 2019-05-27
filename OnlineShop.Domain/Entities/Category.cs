@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace OnlineShop.Domain.Entities
 {
-    public class Category //: IEqualityComparer<Category>
+    public class Category
     {
         [HiddenInput(DisplayValue = false)]
         public int CategoryId { get; set; }
@@ -34,19 +34,16 @@ namespace OnlineShop.Domain.Entities
 
         public static bool operator ==(Category category1, Category category2)
         {
-            // If both are null, or both are same instance, return true.
             if (System.Object.ReferenceEquals(category1, category2))
             {
                 return true;
             }
 
-            // If one is null, but not both, return false.
             if (((object)category1 == null) || ((object)category2 == null))
             {
                 return false;
             }
 
-            // Return true if the fields match:
             return category1.CategoryName == category2.CategoryName;
         }
 
