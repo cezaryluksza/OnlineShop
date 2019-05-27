@@ -2,8 +2,6 @@
 @model OnlineShop.Domain.Entities.Product
 
 <div class="product-box">
-    @*<a href="@Url.Action("Product", new { @Model.ProductId })">*@
-    @*Html.RouteLink(Model.Name, new { controller = "Product", action="Product", productId = Model.ProductId, productName = Model.Name})*@
     @if (Model.ImageData != null)
     {
     <div class="img-product">
@@ -20,5 +18,4 @@
 
     </h4>
     <h4 class="pull-right">@Model.Price.ToString("c")</h4>
-    @*</a>*@
 </div>
