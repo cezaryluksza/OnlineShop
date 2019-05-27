@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h5 class="text-center">Kategoria: @Model.Category</h5>
+<h5 class="text-center">Kategoria: @Model.Category.CategoryName</h5>
 
 <h2 class="text-center">@Model.Name</h2>
 
@@ -17,25 +17,22 @@
         <img class="img img-center" src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
     </div>
 }
-
 <br />
 <br />
 
 @using (Html.BeginForm("AddToCart", "Cart"))
 {
 
-    <div class="text-center">
-        <span class="price">@Model.Price zł</span>
-        @Html.HiddenFor(x => x.ProductId)
-        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-        <input type="submit" class="btn btn-success add-cart" value="Dodaj do koszyka" />
-    </div>
+<div class="text-center">
+    <span class="price">@Model.Price zł</span>
+    @Html.DropDownList("quantity", Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+    @Html.HiddenFor(x => x.ProductId)
+    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+    <input type="submit" class="btn btn-success add-cart" value="Dodaj do koszyka" />
+</div>
 }
-    <br />
-
+<br />
 <hr />
-
 <h4 class="text-center">@Model.Description</h4>
-
 <hr />
 

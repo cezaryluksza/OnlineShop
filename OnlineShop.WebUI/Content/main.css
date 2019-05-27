@@ -131,6 +131,7 @@
 
 .price {
     font-size: 18px;
+    margin-right: 10px;
 }
 .add-cart {
     margin-left: 20px;
@@ -165,8 +166,4 @@ hr {
     padding: 0;
     height: 100%;
     width: 100%;
-}
-
-.slider {
-    padding-top: 100px;
 }
