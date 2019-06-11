@@ -31,12 +31,17 @@ namespace OnlineShop.WebUI.Controllers
         #region Product
         public ViewResult Products()
         {
-            var products = _productRepository.Products;
-            foreach (var product in products)
+            var products = _productRepository.Products.Where(x => x.IsDeleted == false);
+            if (_categoryRepository != null)
             {
-                product.Category = _categoryRepository.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
+                foreach (var product in products)
+                {
+                    product.Category =
+                        _categoryRepository.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
+                }
             }
-            return View(_productRepository.Products);
+
+            return View(products);
         }
         public ViewResult Create()
         {
@@ -117,6 +122,17 @@ namespace OnlineShop.WebUI.Controllers
             return View("EditCategory", new Category());
         }
 
+        [HttpPost]
+        public ActionResult DeleteCategory(int categoryId)
+        {
+            Category deletedCategory = _categoryRepository.DeleteCategory(categoryId);
+            if (deletedCategory != null)
+            {
+                TempData["message"] = string.Format($"Usunięto {deletedCategory.CategoryName}");
+            }
+            return RedirectToAction("Index");
+        }
+
         [ChildActionOnly]
         public ActionResult DropDownList()
         {
@@ -127,17 +143,6 @@ namespace OnlineShop.WebUI.Controllers
             };
 
             return PartialView(viewmodel);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteCategory(int categoryId)
-        {
-            Category deletedCategory = _categoryRepository.DeleteCategory(categoryId);
-            if (deletedCategory != null)
-            {
-                TempData["message"] = string.Format($"Usunięto {deletedCategory.CategoryName}");
-            }
-            return RedirectToAction("Index");
         }
         #endregion
 

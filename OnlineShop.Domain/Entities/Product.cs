@@ -48,5 +48,7 @@ namespace OnlineShop.Domain.Entities
         public byte[] ImageDataThumbnail { get; set; }
 
         public string ImageMimeType { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

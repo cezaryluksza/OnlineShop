@@ -25,13 +25,12 @@ namespace OnlineShop.Domain.Concrete
 
     public class OrderProcessor : IOrderProcessor
     {
-        private EmailSettings emailSettings;
+        private readonly EmailSettings _emailSettings;
 
         public OrderProcessor(EmailSettings settings)
         {
-            emailSettings = settings;
+            _emailSettings = settings;
         }
-
 
         public void ProcessOrder(Cart cart, ShippingDetails shippingInfo, string userId = null)
         {
@@ -43,16 +42,16 @@ namespace OnlineShop.Domain.Concrete
         {
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.EnableSsl = emailSettings.UseSsl;
-                smtpClient.Host = emailSettings.ServerName;
-                smtpClient.Port = emailSettings.ServerPort;
+                smtpClient.EnableSsl = _emailSettings.UseSsl;
+                smtpClient.Host = _emailSettings.ServerName;
+                smtpClient.Port = _emailSettings.ServerPort;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(emailSettings.Username,
-                emailSettings.Password);
-                if (emailSettings.WriteAsFile)
+                smtpClient.Credentials = new NetworkCredential(_emailSettings.Username,
+                _emailSettings.Password);
+                if (_emailSettings.WriteAsFile)
                 {
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                    smtpClient.PickupDirectoryLocation = emailSettings.FileLocation;
+                    smtpClient.PickupDirectoryLocation = _emailSettings.FileLocation;
                     smtpClient.EnableSsl = false;
                 }
                 
@@ -65,6 +64,7 @@ namespace OnlineShop.Domain.Concrete
                 {
                     var subtotal = line.Product.Price * line.Quantity;
                     body.AppendFormat("{0} x {1}", line.Quantity, line.Product.Name);
+                    body.AppendLine("<br/>");
                 }
                 body.AppendFormat("<br/>Wartość całkowita: {0:c}", cart.ComputeTotalValue())
                     .AppendLine("<br/>---<br/>")
@@ -83,10 +83,11 @@ namespace OnlineShop.Domain.Concrete
                     .AppendLine()
                     .AppendLine("<br /><br /><img src='https://i.imgur.com/rtnePfb.png'>")
                     .AppendLine("</body></html>");
-                MailMessage mailMessage = new MailMessage(emailSettings.MailFromAddress, emailSettings.MailToAddress, "Otrzymano nowe zamówienie!", body.ToString());
+                MailMessage mailMessage = new MailMessage(_emailSettings.MailFromAddress, _emailSettings.MailToAddress,
+                    "Otrzymano nowe zamówienie!", body.ToString());
 
                 mailMessage.IsBodyHtml = true;
-                if (emailSettings.WriteAsFile)
+                if (_emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }
@@ -118,7 +119,7 @@ namespace OnlineShop.Domain.Concrete
                     cartLine.Product = line.Product;
                     cartLine.Quantity = line.Quantity;
                     cartLine.OrderId = order.OrderId;
-                    context.Cartlines.Add(cartLine);
+                    context.CartLines.Add(cartLine);
                 }
 
                 context.SaveChanges();

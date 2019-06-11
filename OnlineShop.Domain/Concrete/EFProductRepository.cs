@@ -49,7 +49,7 @@ namespace OnlineShop.Domain.Concrete
             Product dbEntry = context.Products.Find(productId);
             if (dbEntry != null)
             {
-                context.Products.Remove(dbEntry);
+                dbEntry.IsDeleted = true;
                 context.SaveChanges();
             }
             return dbEntry;

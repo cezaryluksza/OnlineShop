@@ -66,7 +66,7 @@ namespace OnlineShop.WebUI.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Nieprawidłowy login lub hasło.");
                     return View(model);
             }
         }
@@ -81,31 +81,6 @@ namespace OnlineShop.WebUI.Controllers
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                default:
-                    ModelState.AddModelError("", @"Invalid code.");
-                    return View(model);
-            }
-        }
-
 
         [AllowAnonymous]
         public ActionResult Register()
@@ -135,61 +110,6 @@ namespace OnlineShop.WebUI.Controllers
 
             return View(model);
         }
-
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
-
-
-
-        [AllowAnonymous]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
-        }
-
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

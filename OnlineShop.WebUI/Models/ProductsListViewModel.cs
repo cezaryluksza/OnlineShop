@@ -11,3 +11,5 @@ namespace OnlineShop.WebUI.Models
         public SortingType CurrentSorting { get; set; }
     }
 }
+
+

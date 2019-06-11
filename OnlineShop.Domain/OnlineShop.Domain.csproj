@@ -144,6 +144,26 @@
     <Compile Include="Migrations\201905261741534_Order_Fix3.Designer.cs">
       <DependentUpon>201905261741534_Order_Fix3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906091401110_CartLineFix.cs" />
+    <Compile Include="Migrations\201906091401110_CartLineFix.Designer.cs">
+      <DependentUpon>201906091401110_CartLineFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906091403599_AddProductIsDeleted.cs" />
+    <Compile Include="Migrations\201906091403599_AddProductIsDeleted.Designer.cs">
+      <DependentUpon>201906091403599_AddProductIsDeleted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906101311102_ChangeAddressIdToNullable.cs" />
+    <Compile Include="Migrations\201906101311102_ChangeAddressIdToNullable.Designer.cs">
+      <DependentUpon>201906101311102_ChangeAddressIdToNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906101332101_AddOrderTime.cs" />
+    <Compile Include="Migrations\201906101332101_AddOrderTime.Designer.cs">
+      <DependentUpon>201906101332101_AddOrderTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906101508476_FixCartLine.cs" />
+    <Compile Include="Migrations\201906101508476_FixCartLine.Designer.cs">
+      <DependentUpon>201906101508476_FixCartLine.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -195,6 +215,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905261741534_Order_Fix3.resx">
       <DependentUpon>201905261741534_Order_Fix3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906091401110_CartLineFix.resx">
+      <DependentUpon>201906091401110_CartLineFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906091403599_AddProductIsDeleted.resx">
+      <DependentUpon>201906091403599_AddProductIsDeleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906101311102_ChangeAddressIdToNullable.resx">
+      <DependentUpon>201906101311102_ChangeAddressIdToNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906101332101_AddOrderTime.resx">
+      <DependentUpon>201906101332101_AddOrderTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906101508476_FixCartLine.resx">
+      <DependentUpon>201906101508476_FixCartLine.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShop.Domain.Entities
 {
@@ -11,5 +12,7 @@ namespace OnlineShop.Domain.Entities
         public ShippingDetails ShippingDetails { get; set; }
         
         public ApplicationUser User { get; set; }
+
+        public DateTime? OrderTime { get; set; } 
     }
 }

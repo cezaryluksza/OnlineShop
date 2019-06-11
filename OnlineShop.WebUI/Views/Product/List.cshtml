@@ -11,5 +11,9 @@
 }
 
 <div style="clear: both; margin-top: 10px;" class="btn-group pull-left">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory, sortingOption = Model.CurrentSorting }))
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", 
+        new { page = x, category = Model.CurrentCategory, sortingOption = Model.CurrentSorting }))
 </div>
+
+
+

@@ -25,8 +25,13 @@ namespace OnlineShop.WebUI.Controllers
 
         public ViewResult List(string category, int page = 1, SortingType sortingOption = 0)
         {
-            int categoryId = _categoryRepository.GetCategoryId(category);
-            IEnumerable<Product> products = _productRepository.Products.OrderBy(x => x.ProductId);
+            int categoryId = 0;
+            if (_categoryRepository != null)
+            {
+                categoryId = _categoryRepository.GetCategoryId(category);
+            }
+
+            IEnumerable<Product> products = _productRepository.Products.Where(x => x.IsDeleted == false).OrderBy(x => x.ProductId);
 
             switch (sortingOption)
             {
@@ -61,7 +66,8 @@ namespace OnlineShop.WebUI.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = category == null ? _productRepository.Products.Count() : _productRepository.Products.Count(e => e.CategoryId == categoryId)
+                    TotalItems = category == null ? _productRepository.Products.Count() 
+                        : _productRepository.Products.Count(e => e.CategoryId == categoryId)
                 },
                 CurrentCategory = category,
                 CurrentSorting = sortingOption

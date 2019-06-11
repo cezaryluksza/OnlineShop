@@ -13,12 +13,12 @@ namespace OnlineShop.Domain.Concrete
 {
     public partial class EFDbContext : IdentityDbContext<ApplicationUser>
     {
-        public EFDbContext() : base("EFDbContext") { }
+        public EFDbContext() : base("OnlineShopContext") { }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<CartLine> Cartlines { get; set; }
+        public DbSet<CartLine> CartLines { get; set; }
         public DbSet<Order> Orders { get; set; }
 
 

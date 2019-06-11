@@ -8,7 +8,7 @@ namespace OnlineShop.Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public Address Address { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
